@@ -753,7 +753,7 @@
                 studentId: "250139",
                 email: "riadraj009@gmail.com",
                 phone: "01610077278",
-                photo: "https://img.sanishtech.com/u/ab1fd8affde44dab3e81a542db46c5d2.jpg"
+                photo: "https://res.cloudinary.com/dcwnn9c0u/image/upload/v1766127478/d2guywowhf2g2qdntkli.jpg"
             },
             {
                 id: 35,
