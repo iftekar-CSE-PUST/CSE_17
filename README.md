@@ -537,7 +537,7 @@
     <script>
         const students = [
             { id: 1, name: "Akhi Akter Mim", studentId: "250101",currentAddress: "", permanentAddress: "", phone: "01612036386", facebook: "", email: "", bloodGroup: "", photo: "" },
-            { id: 2, name: "Md. Nasir Uddin Nafiz", studentId: "250103",currentAddress: "", permanentAddress: "", phone: "01723541919", facebook: "", email: "", bloodGroup: "", photo: "" },
+            { id: 2, name: "Md. Masir Uddin Nafiz ", studentId: "250103",currentAddress: "Mohisher Dipo, Pabna", permanentAddress: "Shariakandi,  Bogura", phone: "01723541919", facebook: "https://www.facebook.com/share/17iXMSgbvs/", email: "nasiruddin.nfz21@gmail.com", bloodGroup: "A+", photo: "https://res.cloudinary.com/dcwnn9c0u/image/upload/v1766156267/id6cyo4wmyw0o6hlfyzm.jpg"},
             { id: 3, name: "Amit Kumar Dhali", studentId: "250104",currentAddress: "", permanentAddress: "", phone: "01533878366", facebook: "", email: "", bloodGroup: "", photo: "" },
             { id: 4, name: "Md. Shafayat Ahmed", studentId: "250105",currentAddress: "", permanentAddress: "", phone: "01559704798", facebook: "", email: "", bloodGroup: "", photo: "" },
             { id: 5, name: "Toufique Al Imran", studentId: "250106",currentAddress: "", permanentAddress: "", phone: "01721798790", facebook: "", email: "", bloodGroup: "", photo: "" },
