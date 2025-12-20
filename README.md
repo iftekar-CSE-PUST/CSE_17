@@ -32,7 +32,7 @@
         .shape1 {
             width: 500px;
             height: 500px;
-            background: linear-gradient(135deg, #ff6b6b, #feca57);
+            background: linear-gradient(135deg, #683fe3, #6513e8);
             top: -200px;
             left: -200px;
             animation-delay: 0s;
@@ -59,7 +59,7 @@
         .shape4 {
             width: 450px;
             height: 450px;
-            background: linear-gradient(135deg, #26de81, #20bf6b);
+            background: linear-gradient(135deg, #1f6fd2, #0b659d);
             top: 15%;
             left: 8%;
             animation-delay: 15s;
@@ -152,22 +152,34 @@
         }
 
         .header-text h2 {
-            font-size: 1.6em;
-            background: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
+            font-size: 2.2em;
+            background: linear-gradient(135deg, #ff6b6b, #f093fb, #667eea, #2673de, #7911c3);
+            background-size: 200% 200%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            margin-bottom: 5px;
-            font-weight: 800;
+            margin-bottom: 8px;
+            font-weight: 900;
             letter-spacing: -0.5px;
             transition: all 0.3s ease;
+            animation: gradientShift 5s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
         }
 
         .header-text small {
-            color: #555;
-            font-size: 1em;
-            font-weight: 500;
-            transition: color 0.3s ease;
+            font-size: 1.35em;
+            background: linear-gradient(135deg, #764ba2, #f093fb, #667eea);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            display: block;
+            margin-top: 5px;
         }
 
         .time {
@@ -669,7 +681,11 @@
             }
 
             .header-text h2 {
-                font-size: 1.4em;
+                font-size: 1.6em;
+            }
+
+            .header-text small {
+                font-size: 1.1em;
             }
         }
 
