@@ -840,7 +840,7 @@ facebook: "https://www.facebook.com/profile.php?id=100074429367529",
 email: "azizulhoqueemon634@gmail.com",
 bloodGroup: "A+",
 photo: "https://res.cloudinary.com/dcwnn9c0u/image/upload/v1766228742/dued0vw2cxjcsbli9ghs.jpg"},
-            { id: 36, name: "Mst. Johura Khatun", studentId: "250141",currentAddress: "Rajapur, Pabna", permanentAddress: "Rajapur, Pabna", phone: "01752403522", facebook: "https://www.facebook.com/share/1DSpnpcvsY/",email: "fatematujjohura819@gmail.com", bloodGroup: "O+", photo: ""}
+            { id: 36, name: "Mst. Johura Khatun", studentId: "250141",currentAddress: "Rajapur, Pabna", permanentAddress: "Rajapur, Pabna", phone: "01752403522", facebook: "https://www.facebook.com/share/1DSpnpcvsY/",email: "fatematujjohura819@gmail.com", bloodGroup: "O+", photo: "https://res.cloudinary.com/dcwnn9c0u/image/upload/v1766311852/ysu0nkwa0yz07hln8mz5.jpg"}
         ];
 
         function getInitials(name) {
