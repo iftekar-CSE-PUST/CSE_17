@@ -88,18 +88,49 @@
         }
 
         header {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 25px 40px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
-            backdrop-filter: blur(20px);
-            border-bottom: 3px solid transparent;
-            border-image: linear-gradient(90deg, #667eea, #764ba2, #f093fb, #ff6b6b) 1;
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  width: 100%;
+  padding: 25px 40px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  border-radius: 0 0 35px 35px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+
+  position: relative;
+  overflow: hidden;
+}
+
+/* Gradient Border */
+header::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  height: 4px;
+
+  background: linear-gradient(
+    90deg,
+    #667eea,
+    #764ba2,
+    #f093fb,
+    #ff6b6b
+  );
+
+  border-radius: 0 0 35px 35px;
+}
+
 
         .logo-section {
             display: flex;
@@ -297,7 +328,7 @@
             margin: 30px auto 55px;
             padding: 45px;
             background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 50%, #f368e0 100%);
-            border-radius: 30px;
+            border-radius: 35px;
             color: white;
             max-width: 480px;
             box-shadow: 0 20px 60px rgba(245,87,108,0.4);
@@ -363,7 +394,7 @@
 
         .student-card {
             background: linear-gradient(135deg, rgba(255,255,255,0.98), rgba(255,255,255,0.95));
-            border-radius: 28px;
+            border-radius: 35px;
             box-shadow: 0 15px 45px rgba(0,0,0,0.15);
             overflow: hidden;
             transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
@@ -402,6 +433,7 @@
             animation: gradientSlide 4s linear infinite;
             transform: scaleX(0);
             transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 35px 35px 0 0;
         }
 
         @keyframes gradientSlide {
@@ -423,6 +455,7 @@
             overflow: hidden;
             height: 320px;
             background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 35px 35px 0 0;
         }
 
         .student-photo, .initials {
@@ -494,7 +527,7 @@
             margin-bottom: 20px;
             padding: 12px 24px;
             background: linear-gradient(135deg, #667eea, #764ba2);
-            border-radius: 30px;
+            border-radius: 35px;
             display: inline-block;
             font-weight: 800;
             box-shadow: 0 8px 20px rgba(102,126,234,0.4);
@@ -515,7 +548,7 @@
             color: #444;
             flex-wrap: wrap;
             padding: 10px 15px;
-            border-radius: 15px;
+            border-radius: 20px;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             font-weight: 500;
         }
@@ -535,6 +568,16 @@
             transform: scale(1.2);
         }
 
+        .info-item a {
+            color: inherit;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .info-item a:hover {
+            color: #667eea;
+        }
+
         .icon-session { color: #ffa502; }
         .icon-current { color: #26de81; }
         .icon-permanent { color: #fd79a8; }
@@ -549,7 +592,7 @@
             cursor: pointer;
             color: white;
             padding: 8px 12px;
-            border-radius: 10px;
+            border-radius: 15px;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             font-size: 0.95em;
         }
@@ -565,7 +608,7 @@
             background: linear-gradient(135deg, #2d3436, #000000);
             color: #fff;
             text-align: center;
-            border-radius: 18px;
+            border-radius: 25px;
             padding: 20px 30px;
             position: fixed;
             left: 50%;
@@ -610,8 +653,7 @@
             position: relative;
             overflow: hidden;
             margin-top: 60px;
-            border-top: 4px solid transparent;
-            border-image: linear-gradient(90deg, #667eea, #764ba2, #f093fb) 1;
+            border-radius: 35px 35px 0 0;
         }
 
         footer::before {
@@ -645,7 +687,7 @@
             height: 4px;
             background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
             margin: 18px auto;
-            border-radius: 4px;
+            border-radius: 10px;
             transition: all 0.3s ease;
         }
 
@@ -753,7 +795,7 @@
     </div>
 
     <script>
-         const students = [
+        const students = [
             { id: 1, name: "Akhi Aktar Mim", 
 studentId: "250101"
 ,currentAddress: "Mujahid Club, Pabna",
