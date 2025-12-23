@@ -1030,7 +1030,7 @@
                     <div class="login-logo">
                         <i class="fas fa-user-graduate"></i>
                     </div>
-                    <h1>Welcome to CSE 17 Batch</h1>
+                    <h1>Welcome to PUST CSE 17th Batch</h1>
                     <p>Please login to access Student Directory</p>
                 </div>
                 
