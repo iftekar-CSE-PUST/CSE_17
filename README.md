@@ -974,7 +974,7 @@
             width: 160px;
         }
 
-        /* Announcement Modal Styles */
+        /* Announcement Modal Styles - FIXED */
         .announcement-modal {
             display: none;
             position: fixed;
@@ -982,22 +982,37 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.9);
-            z-index: 9998;
+            background: rgba(0,0,0,0.85);
+            z-index: 9999;
             justify-content: center;
             align-items: center;
             padding: 20px;
+            overflow-y: auto;
         }
 
         .announcement-modal-content {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            padding: 30px;
-            border-radius: 20px;
-            max-width: 800px;
-            width: 90%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 35px;
+            border-radius: 25px;
+            max-width: 850px;
+            width: 95%;
             color: white;
-            max-height: 90vh;
+            max-height: 85vh;
             overflow-y: auto;
+            box-shadow: 0 25px 70px rgba(0,0,0,0.5);
+            border: 2px solid rgba(255,255,255,0.2);
+            animation: modalFadeIn 0.4s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
         }
 
         .announcement-header {
@@ -1005,10 +1020,20 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(255,255,255,0.2);
         }
 
         .announcement-header h2 {
             margin: 0;
+            font-size: 1.8em;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .close-announcement {
@@ -1023,50 +1048,73 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .close-announcement:hover {
+            background: rgba(255,255,255,0.3);
+            transform: rotate(90deg);
         }
 
         .announcement-content {
-            background: rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.15);
             padding: 25px;
-            border-radius: 15px;
-            margin-bottom: 20px;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
         .announcement-content h3 {
             margin-top: 0;
             color: #FFD700;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .announcement-table {
-            background: rgba(255,255,255,0.08);
-            border-radius: 15px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
             padding: 20px;
             overflow-x: auto;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
         .announcement-table table {
             width: 100%;
             border-collapse: collapse;
             color: white;
+            min-width: 600px;
         }
 
         .announcement-table th,
         .announcement-table td {
-            padding: 15px;
+            padding: 18px 15px;
             text-align: left;
             border-bottom: 1px solid rgba(255,255,255,0.1);
+            font-size: 1em;
         }
 
         .announcement-table th {
-            background: rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.2);
             border-bottom: 2px solid rgba(255,255,255,0.3);
+            font-weight: 700;
+            font-size: 1.1em;
+        }
+
+        .announcement-table tr:hover {
+            background: rgba(255,255,255,0.05);
         }
 
         .announcement-note {
             margin-top: 25px;
             padding: 20px;
-            background: rgba(255,255,255,0.05);
+            background: rgba(255,255,255,0.08);
             border-radius: 15px;
             border-left: 4px solid #FFD700;
         }
@@ -1160,6 +1208,7 @@
             /* Announcement modal responsive */
             .announcement-modal-content {
                 padding: 20px;
+                max-height: 90vh;
             }
 
             .announcement-content {
@@ -1168,8 +1217,12 @@
 
             .announcement-table th,
             .announcement-table td {
-                padding: 10px;
+                padding: 12px 8px;
                 font-size: 0.9em;
+            }
+
+            .announcement-header h2 {
+                font-size: 1.4em;
             }
         }
 
@@ -1297,7 +1350,7 @@
             <span id="toast-text"></span>
         </div>
 
-        <!-- Transferred: Exam Schedule Modal -->
+        <!-- Transferred: Exam Schedule Modal - FIXED -->
         <div id="announcementModal" class="announcement-modal">
             <div class="announcement-modal-content">
                 <div class="announcement-header">
@@ -1409,9 +1462,6 @@
         const loginError = document.getElementById('loginError');
         const logoutBtn = document.getElementById('logoutBtn');
         const currentYear = new Date().getFullYear();
-        const announcementBtn = document.getElementById('announcementBtn');
-        const announcementModal = document.getElementById('announcementModal');
-        const closeAnnouncement = document.getElementById('closeAnnouncement');
 
         // Check if user is already logged in
         function checkLoginStatus() {
@@ -1536,115 +1586,82 @@
             initializeAnnouncementModal();
         }
 
-        // Initialize announcement modal
+        // Initialize announcement modal - FIXED
         function initializeAnnouncementModal() {
-            // Announcements button
-            announcementBtn.addEventListener('click', () => {
-                announcementModal.style.display = 'flex';
-            });
+            const announcementBtn = document.getElementById('announcementBtn');
+            const announcementModal = document.getElementById('announcementModal');
+            const closeAnnouncement = document.getElementById('closeAnnouncement');
             
-            // Close announcement modal
-            closeAnnouncement.addEventListener('click', () => {
-                announcementModal.style.display = 'none';
-            });
-            
-            // Close modal when clicking outside
-            announcementModal.addEventListener('click', (e) => {
-                if (e.target === announcementModal) {
+            if (announcementBtn && announcementModal && closeAnnouncement) {
+                // Announcements button
+                announcementBtn.addEventListener('click', () => {
+                    announcementModal.style.display = 'flex';
+                    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+                });
+                
+                // Close announcement modal
+                closeAnnouncement.addEventListener('click', () => {
                     announcementModal.style.display = 'none';
-                }
-            });
+                    document.body.style.overflow = 'auto'; // Restore scrolling
+                });
+                
+                // Close modal when clicking outside
+                announcementModal.addEventListener('click', (e) => {
+                    if (e.target === announcementModal) {
+                        announcementModal.style.display = 'none';
+                        document.body.style.overflow = 'auto'; // Restore scrolling
+                    }
+                });
+                
+                // Close modal with Escape key
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape' && announcementModal.style.display === 'flex') {
+                        announcementModal.style.display = 'none';
+                        document.body.style.overflow = 'auto'; // Restore scrolling
+                    }
+                });
+            } else {
+                console.error('Announcement modal elements not found');
+            }
         }
 
         // Student data and rendering functions (from original code)
         const students = [
-            { id: 1, name: "Akhi Aktar Mim", 
-studentId: "250101"
-,currentAddress: "Mujahid Club, Pabna",
- permanentAddress: "Mujahid Club, Pabna", 
-phone: "01612-036386", 
-facebook: "https://www.facebook.com/share/1CyTKKR7tL/", 
-email: "mimakhiaktar8@gmail.com", bloodGroup: "B+", 
-photo: "https://i.ibb.co.com/v43BzynP/IMG-3548.jpg"},
-            { id: 2, name: "Md. Nasir Uddin Nafiz ", studentId: "250103",currentAddress: "Mohisher Dipo, Pabna", permanentAddress: "Shariakandi,  Bogura", phone: "01723541919", facebook: "https://www.facebook.com/share/17iXMSgbvs/", email: "nasiruddin.nfz21@gmail.com", bloodGroup: "A+", photo: "https://i.ibb.co.com/ymvgYfMt/att-8c4v4vex97gc0-TXIg-KKUc-U7-YTa-k-MN-Kj-B27-Oa-Fr-Fk.jpg"},
-            { id: 3, name: "Amit Kumar Dhali", studentId: "250104",currentAddress: "Terminal, Pabna", permanentAddress: "Paikgacha, Khulna", phone: "01533878366", facebook: "https://www.facebook.com/amitdhali.dhali.5", email: "amitdhali1002@gmail.com", bloodGroup: "B+", photo: "https://i.ibb.co.com/B2RsbbhN/IMG-3570.jpg"},
-            { id: 4, name: "Md. Shafayat Ahmed", studentId: "250105",currentAddress: "Monsurabad, Pabna", permanentAddress: "Niamatpur, Naogaon", phone: "01559704798", facebook: "https://www.facebook.com/share/1HJih8u9DS/", email: "ahmedshafayat959@gmail.com", bloodGroup: "O+", photo:"https://i.ibb.co.com/JRdDJvDZ/IMG-3583.jpg"},
-            { id: 5, name: "Toufique Al Imran", studentId: "250106",currentAddress: "Mahtab tower, Pabna", permanentAddress: "Mohadevpur, Naogaon", phone: "01721798790", facebook: "https://www.facebook.com/toufiquealimran548", email: "toufiquealimran01@gmail.com", bloodGroup: "B+", photo: "https://i.ibb.co.com/9k1WNbfg/IMG-3556.jpg"},
-            { id: 6, name: "Apurba Kumar", studentId: "250107",currentAddress: "Radhanagar, Pabna", permanentAddress: "Raninagar, Naogaon", phone: "01771076379", facebook: "https://www.facebook.com/share/1BYvu47bW7/", email: "apurbakumar340@gmail.com", bloodGroup: "O+", photo: "https://i.ibb.co.com/5hTg980G/a975a75e-d467-4b93-bfd1-3ab43bb0dad5.jpg"},
-            { id: 7, name: "MD. MUHIBUR RAHMAN BHUIYAN", studentId: "250108",currentAddress: "Mujahid Club", permanentAddress: "Dhaka", phone: "01929354030", facebook: "https://www.facebook.com/md.antik.213468", email: "muhibur1109@gmail.com", bloodGroup: "B+", photo: "https://i.ibb.co.com/934LjpbC/IMG-3568.jpg"},
-            { id: 8, name: "Md. Faruk Hossain", studentId: "250109",currentAddress: "Rajapur, Pabna", permanentAddress: "Birampur, Dinajpur", phone: "01516595496", facebook: "https://www.facebook.com/profile.php?id=100057254032930", email: "faruk1572005@gmail.com", bloodGroup: "O+", photo: "https://i.ibb.co.com/LzFVsGwy/att-TQq-VL-nu-Cxb-G9-WAq-ETQ-Ld2uxr2-D9yv-Hp-KQ-Yh-VHr8g.jpg"},
-            { id: 9, name: "Upama Saha", studentId: "250110",currentAddress: "Munsurabad, Pabna", permanentAddress: "Tangail", phone: "01327221457", facebook: "https://www.facebook.com/share/16kouSyzwK/?mibextid=wwXIfr", email: "uparnasaha0@gmail.com", bloodGroup: "B+", photo: "https://i.ibb.co.com/jZgKZd76/att-f-ZDh-Nb-4-RDz1-F5-KBv43zl108bm-ABn-k-KRng-W-tu-YCDc.jpg" },
-            { id: 10, name: "Md. Mahfil Akter", studentId: "250111",currentAddress: "Mohisher Dipo", permanentAddress: "Naogaon", phone: "01716175548", facebook: "https://www.facebook.com/share/1HtVvXPhgA/", email: "mdmahfilakter@gmail.com", bloodGroup: "B+", photo: "https://i.ibb.co.com/3mFNptF3/IMG-3540.jpg"},
-            { id: 11, name: "Md. Asadullah Atik",
-studentId: "250112",
-currentAddress: "Talbagan, Pabna",
-permanentAddress: "Dinajpur",
-phone: "01874175415", facebook: "https://www.facebook.com/realasadullahatik",
- email: "atikcsepust@gmail.com",
- bloodGroup: "O+",
- photo: "https://i.ibb.co.com/zTd6k6Zj/IMG-3563.jpg"},
-            { id: 12, name: "Avijit Biswas", studentId: "250113",currentAddress: "Meril Bypass", permanentAddress: "Jashore", phone: "01902340202", facebook: "https://www.facebook.com/ovi.jit.3950", email: "avijit90321jsr@gmail.com", bloodGroup: "B+", photo: "https://i.ibb.co.com/ycf5FtD3/a92c1e46-c270-47b2-82e7-4c9b4e81b370.jpg"},
-            { id: 13, name: "Mst. Sumaiya Islam", studentId: " 250114",currentAddress: " Rajapur,Pabna", permanentAddress: " Gazipur Sadar,Gazipur", phone: " 01924465889", facebook: " https://www.facebook.com/sumaiya.islam.272223", email: "mst.sumaiyaislam424@gmail.com", bloodGroup: "AB+", photo: "https://i.ibb.co.com/mrmpp1dF/IMG-3561.jpg" },
-            { id: 14, name: "Rima Jahan", studentId: "250115",currentAddress: "Forida Tower", permanentAddress: "Thakurgaon ", phone: "01909197188", facebook: "https://www.facebook.com/share/1AvdJzXmuB/", email: "rimajahansdp@gmail.com", bloodGroup: "B+", photo: ""},
-            { id: 15, name: "MST. URMILA KHATUN", studentId: "250116",currentAddress: "Farida Tower", permanentAddress: "Naldanga, Natore", phone: "01626273480", facebook: "https://www.facebook.com/share/1AgvF7oeDv/", email: "urmilakhatun3456@gmail.com", bloodGroup: "B+", photo: "https://i.ibb.co.com/7t4GfHvW/155ff202-f119-43bf-96f2-e8d4b47dac7a.jpg"},
-            { id: 16, name: "MD. Forhad Zaman", studentId: "250117",currentAddress: "Homoepathic Medical Mor", permanentAddress: "Godagari, Rajshahi", phone: "01630743003", facebook: "https://www.facebook.com/Forhad.pust.cse17", email: "forhad.af0@gmail.com", bloodGroup: "A+", photo: "https://i.ibb.co.com/pvg7rxVJ/IMG-3578.jpg"},
-            { id: 17, name: "MD.SOYAB HOSSAIN", studentId: "250119",currentAddress: "Mahtab Tower, Pabna", permanentAddress: "Sirajganj", phone: "01571054693", facebook: "https://www.facebook.com/profile.php?id=61578380370457", email: "soyab119678@gmail.com", bloodGroup: "B+", photo: "https://i.ibb.co.com/KjrJ0z7F/IMG-3595.jpg"},
-            { id: 18, name: "Asmaul Husna",
-studentId: "250120",
-currentAddress: "Rajapur, Pabna",
-permanentAddress: "Tangail",
-phone: "01743253000",
-facebook: "https://www.facebook.com/share/1C493KXREL/",
-email: "springshadow29@gmail.com",
-bloodGroup: "B+",
-photo: "https://i.ibb.co.com/Kz8MHrWr/att-0hp-PR7z4-WQOTrt293pm-XV7-EWb-T26-SGs-Rhsb-ZOMj-PPg0.jpg"},
-            { id: 19, name: "MD. NAHIDUL ISLAM", studentId: "250121",currentAddress: "Mohendropur, Pabna", permanentAddress: "Santhia, Pabna", phone: "01834145283", facebook: "https://www.facebook.com/nahidul.cse.pust", email: "nayeem5650@outlook.com", bloodGroup: "B+", photo: "https://i.ibb.co.com/mCTPBwM6/fbc0d8ae-16d5-46fc-9353-2066456953ad.jpg"},
-            { id: 20, name:"Salauddin Ayyuve", studentId:"250122",currentAddress:"Mujahid Club", permanentAddress: "Shajadpure,Sirajganj ", phone: "01318856637", facebook: "https://www.facebook.com/share/17agXG6z6T/ ", email: "salauddinaiuve@gmail.com", bloodGroup: "B-", photo: "https://i.ibb.co.com/wZfKNsX6/477d429fd66df236ba92a46270e7b9d4.jpg"},
-            {id : 21, name : "Zahin Mahmud Daiyan", studentId : "250123", currentAddress : "Mahtab Tower, Pabna", permanentAddress : "Mohonpur, Natore", phone : "01701299258", facebook : "https://www.facebook.com/zahin.mahmud.daiyan.CSE.PUST", email : "zahinmahmuddaiyan271@gmail.com", bloodGroup : "O+", photo : "https://i.ibb.co.com/hRX7T65C/IMG-3538.jpg"},            { id: 22, name: "Mst. Khandakar  Jahida", studentId: "250124",currentAddress: "Munsurabad, Pabna", permanentAddress: "Polastoli, Tangail", phone: "01303341680", facebook: "https://www.facebook.com/share/1FBAjWHw1W/", email: "mstkhandakerjahida@gmail", bloodGroup: "O+", photo: "https://i.ibb.co.com/5xS6Gy7J/IMG-3587.jpg"},
-            { id: 23, name: "SHAHID-HASAN-FAHIM", studentId: "250125",currentAddress: "Mujahid Club", permanentAddress: "Nilphamari", phone: "01720988987", facebook: "https://www.facebook.com/share/1HLGbwMiFn/", email: "shfahimf@gmail.com", bloodGroup: "o+", photo: "https://i.ibb.co.com/Y7C5pXDJ/IMG-3535.jpg"},
-            { id: 24, name : "Fatema",
-studentId: "250127",
-currentAddress: "Rajapur, Pabna",
-permanentAddress : "Mirzapur, Tangail ",
-email : "mdalommiya205@gmail",
-phone: "01605991240",
-bloodGroup: "AB+",
-facebook : "https://www.facebook.com/share/17nodFe5rp/",
-photo: "https://i.ibb.co.com/fdxrnqkn/IMG-3565.jpg"},
-            { id: 25, name: "Mst.Soheli Aktar Akhi", 
-studentId: "250128",
-currentAddress: "Degree Bot tola, Pabna" ,
-permanentAddress: "Bera,Pabna",
-phone: "01875768594", facebook: "https://www.facebook.com/share/1Adm7jw1kh/", email: "soheliakhi999@gmail.com ",
-bloodGroup: "AB+",
- photo:"https://i.ibb.co.com/mrW07ccY/IMG-3554.jpg"},
-            { id: 26, name: "Khandaker Saiful Islam Tanvir", studentId: "250130",currentAddress: "Mujahid Club", permanentAddress: "Muradnagar, Cumilla", phone: "01602032209", facebook: "https://www.facebook.com/share/1AXbodyPma/", email: "Khandakertanvir151@gmail.com ", bloodGroup: "B+", photo: "https://i.ibb.co.com/5hc5PgvV/IMG-3530.jpg"},
-            { id: 27, name: "Md. Riyaz Ali", studentId: " 250132",currentAddress: " Mujahid Club", permanentAddress: "Rajshahi", phone: "01751812046", facebook: " https://www.facebook.com/share/17wXYyanuL/", email: "mdriyazali531@gmail.com", bloodGroup: "O+", photo: "https://i.ibb.co.com/fGMRnsgj/IMG-3533.jpg"},
-            { id: 28, name: "Sahadat Hossain", studentId: "250133",currentAddress: "Mahtab Tower, Pabna", permanentAddress: "Narsingdi", phone: "01994728770", facebook: "https://www.facebook.com/share/1BDsbwm6Lg/", email: "sahadathossain8162@gmail.com", bloodGroup: "O+", photo:"https://i.ibb.co.com/SXJSRnbp/IMG-3580.jpg"},
-            { id: 29, name: "Jagojit Chandro Barmon (Niloy)", studentId: "250134",currentAddress: "Rothghor, Pabna", permanentAddress: "Kurigram", phone: "01737232248", facebook: "https://www.facebook.com/niloy.roy.327548", email: "jagojitchandro@gmail.com", bloodGroup: "B+", photo: "https://i.ibb.co.com/MD9hqp2z/8a8f5f2a-e6b3-43fa-8b83-1bb6ecb1dc6a.jpg"},
-            { id: 30, name: "Nuruzzaman Nahid", studentId: "250135",currentAddress: "Mujahid Club", permanentAddress: "Jhenaidah", phone: "01516582229", facebook: "https://www.facebook.com/share/1BuGmo5qHY/", email: "nahid3739u@gmail.com", bloodGroup: "B+", photo: "https://i.ibb.co.com/HvtshpJ/IMG-3589.jpg"},
-            { id: 31, name: "Sameeha Zahan Mridula",
-studentId: "250136",
-currentAddress: "Mansurabad - 5, Pabna",
-permanentAddress: "Bera (North), Pabna",
-phone: "01950-377978", 
-facebook: "https://www.facebook.com/sameeha.mridula", 
-email: "sameehamridula@gmail.com", 
-bloodGroup: "B+",
-photo: "https://i.ibb.co.com/Sw9SjzQZ/IMG-3552.jpg"},
-            { id: 32, name: "Mohd. Atiquzzaman Atiq", studentId: "250137",currentAddress: "Mahtab Tower, Pabna", permanentAddress: "Chapainawabganj", phone: "01331945616", facebook: "https://www.facebook.com/profile.php?id=61578032794410", email: "ahmedatik5616@gmail.com", bloodGroup: "B+", photo:"https://i.ibb.co.com/Q7mxsLYg/IMG-3591.jpg"},
-            { id: 33, name: "Samin Yesar Tousib ", studentId: "250138",currentAddress: "Mahtab Tower, Pabna", permanentAddress: "Guratipara Rangpur-5400", phone: "01318009252", facebook: "https://www.facebook.com/tousib.CSE.PUST", email: "tousibsaminyesar@gmail.com", bloodGroup: "AB+", photo: "https://i.ibb.co.com/WpKf38Tf/IMG-3550.jpg"},
-            { id: 34, name: "Md. Iftekar Rahman (Riad)", studentId: "250139",currentAddress: "Mujahid Club, Pabna", permanentAddress: "Rajshahi", phone: "01610077278", facebook: "https://www.facebook.com/share/1B5j9PeiVu/?mibextid=wwXIfr", email: "riadraj009@gmail.com", bloodGroup: "A+", photo: "https://i.ibb.co.com/xKvjx11D/IMG-2457.jpg" },
-            { id: 35, name: "Azizul Hoque Emon",
-studentId: "250140",
-currentAddress: "Homeopathy Moore",
-permanentAddress: "Cox's Bazar",
-phone: "01576688477",
-facebook: "https://www.facebook.com/profile.php?id=100074429367529",
-email: "azizulhoqueemon634@gmail.com",
-bloodGroup: "A+",
-photo: "https://i.ibb.co.com/8DMtgncZ/e85606f6-c293-4b97-9e7d-2da222c7bf0c.jpg"},
-            { id: 36, name: "Mst. Johura Khatun", studentId: "250141",currentAddress: "Rajapur, Pabna", permanentAddress: "Rajapur, Pabna", phone: "01752403522", facebook: "https://www.facebook.com/share/1DSpnpcvsY/",email: "fatematujjohura819@gmail.com", bloodGroup: "O+", photo: "https://i.ibb.co.com/6c5JCZzW/IMG-3597.jpg"}
+            { id: 1, name: "Akhi Aktar Mim", studentId: "250101", currentAddress: "Mujahid Club, Pabna", permanentAddress: "Mujahid Club, Pabna", phone: "01612-036386", facebook: "https://www.facebook.com/share/1CyTKKR7tL/", email: "mimakhiaktar8@gmail.com", bloodGroup: "B+", photo: "https://i.ibb.co.com/v43BzynP/IMG-3548.jpg"},
+            { id: 2, name: "Md. Nasir Uddin Nafiz ", studentId: "250103", currentAddress: "Mohisher Dipo, Pabna", permanentAddress: "Shariakandi,  Bogura", phone: "01723541919", facebook: "https://www.facebook.com/share/17iXMSgbvs/", email: "nasiruddin.nfz21@gmail.com", bloodGroup: "A+", photo: "https://i.ibb.co.com/ymvgYfMt/att-8c4v4vex97gc0-TXIg-KKUc-U7-YTa-k-MN-Kj-B27-Oa-Fr-Fk.jpg"},
+            { id: 3, name: "Amit Kumar Dhali", studentId: "250104", currentAddress: "Terminal, Pabna", permanentAddress: "Paikgacha, Khulna", phone: "01533878366", facebook: "https://www.facebook.com/amitdhali.dhali.5", email: "amitdhali1002@gmail.com", bloodGroup: "B+", photo: "https://i.ibb.co.com/B2RsbbhN/IMG-3570.jpg"},
+            { id: 4, name: "Md. Shafayat Ahmed", studentId: "250105", currentAddress: "Monsurabad, Pabna", permanentAddress: "Niamatpur, Naogaon", phone: "01559704798", facebook: "https://www.facebook.com/share/1HJih8u9DS/", email: "ahmedshafayat959@gmail.com", bloodGroup: "O+", photo:"https://i.ibb.co.com/JRdDJvDZ/IMG-3583.jpg"},
+            { id: 5, name: "Toufique Al Imran", studentId: "250106", currentAddress: "Mahtab tower, Pabna", permanentAddress: "Mohadevpur, Naogaon", phone: "01721798790", facebook: "https://www.facebook.com/toufiquealimran548", email: "toufiquealimran01@gmail.com", bloodGroup: "B+", photo: "https://i.ibb.co.com/9k1WNbfg/IMG-3556.jpg"},
+            { id: 6, name: "Apurba Kumar", studentId: "250107", currentAddress: "Radhanagar, Pabna", permanentAddress: "Raninagar, Naogaon", phone: "01771076379", facebook: "https://www.facebook.com/share/1BYvu47bW7/", email: "apurbakumar340@gmail.com", bloodGroup: "O+", photo: "https://i.ibb.co.com/5hTg980G/a975a75e-d467-4b93-bfd1-3ab43bb0dad5.jpg"},
+            { id: 7, name: "MD. MUHIBUR RAHMAN BHUIYAN", studentId: "250108", currentAddress: "Mujahid Club", permanentAddress: "Dhaka", phone: "01929354030", facebook: "https://www.facebook.com/md.antik.213468", email: "muhibur1109@gmail.com", bloodGroup: "B+", photo: "https://i.ibb.co.com/934LjpbC/IMG-3568.jpg"},
+            { id: 8, name: "Md. Faruk Hossain", studentId: "250109", currentAddress: "Rajapur, Pabna", permanentAddress: "Birampur, Dinajpur", phone: "01516595496", facebook: "https://www.facebook.com/profile.php?id=100057254032930", email: "faruk1572005@gmail.com", bloodGroup: "O+", photo: "https://i.ibb.co.com/LzFVsGwy/att-TQq-VL-nu-Cxb-G9-WAq-ETQ-Ld2uxr2-D9yv-Hp-KQ-Yh-VHr8g.jpg"},
+            { id: 9, name: "Upama Saha", studentId: "250110", currentAddress: "Munsurabad, Pabna", permanentAddress: "Tangail", phone: "01327221457", facebook: "https://www.facebook.com/share/16kouSyzwK/?mibextid=wwXIfr", email: "uparnasaha0@gmail.com", bloodGroup: "B+", photo: "https://i.ibb.co.com/jZgKZd76/att-f-ZDh-Nb-4-RDz1-F5-KBv43zl108bm-ABn-k-KRng-W-tu-YCDc.jpg" },
+            { id: 10, name: "Md. Mahfil Akter", studentId: "250111", currentAddress: "Mohisher Dipo", permanentAddress: "Naogaon", phone: "01716175548", facebook: "https://www.facebook.com/share/1HtVvXPhgA/", email: "mdmahfilakter@gmail.com", bloodGroup: "B+", photo: "https://i.ibb.co.com/3mFNptF3/IMG-3540.jpg"},
+            { id: 11, name: "Md. Asadullah Atik", studentId: "250112", currentAddress: "Talbagan, Pabna", permanentAddress: "Dinajpur", phone: "01874175415", facebook: "https://www.facebook.com/realasadullahatik", email: "atikcsepust@gmail.com", bloodGroup: "O+", photo: "https://i.ibb.co.com/zTd6k6Zj/IMG-3563.jpg"},
+            { id: 12, name: "Avijit Biswas", studentId: "250113", currentAddress: "Meril Bypass", permanentAddress: "Jashore", phone: "01902340202", facebook: "https://www.facebook.com/ovi.jit.3950", email: "avijit90321jsr@gmail.com", bloodGroup: "B+", photo: "https://i.ibb.co.com/ycf5FtD3/a92c1e46-c270-47b2-82e7-4c9b4e81b370.jpg"},
+            { id: 13, name: "Mst. Sumaiya Islam", studentId: " 250114", currentAddress: " Rajapur,Pabna", permanentAddress: " Gazipur Sadar,Gazipur", phone: " 01924465889", facebook: " https://www.facebook.com/sumaiya.islam.272223", email: "mst.sumaiyaislam424@gmail.com", bloodGroup: "AB+", photo: "https://i.ibb.co.com/mrmpp1dF/IMG-3561.jpg" },
+            { id: 14, name: "Rima Jahan", studentId: "250115", currentAddress: "Forida Tower", permanentAddress: "Thakurgaon ", phone: "01909197188", facebook: "https://www.facebook.com/share/1AvdJzXmuB/", email: "rimajahansdp@gmail.com", bloodGroup: "B+", photo: ""},
+            { id: 15, name: "MST. URMILA KHATUN", studentId: "250116", currentAddress: "Farida Tower", permanentAddress: "Naldanga, Natore", phone: "01626273480", facebook: "https://www.facebook.com/share/1AgvF7oeDv/", email: "urmilakhatun3456@gmail.com", bloodGroup: "B+", photo: "https://i.ibb.co.com/7t4GfHvW/155ff202-f119-43bf-96f2-e8d4b47dac7a.jpg"},
+            { id: 16, name: "MD. Forhad Zaman", studentId: "250117", currentAddress: "Homoepathic Medical Mor", permanentAddress: "Godagari, Rajshahi", phone: "01630743003", facebook: "https://www.facebook.com/Forhad.pust.cse17", email: "forhad.af0@gmail.com", bloodGroup: "A+", photo: "https://i.ibb.co.com/pvg7rxVJ/IMG-3578.jpg"},
+            { id: 17, name: "MD.SOYAB HOSSAIN", studentId: "250119", currentAddress: "Mahtab Tower, Pabna", permanentAddress: "Sirajganj", phone: "01571054693", facebook: "https://www.facebook.com/profile.php?id=61578380370457", email: "soyab119678@gmail.com", bloodGroup: "B+", photo: "https://i.ibb.co.com/KjrJ0z7F/IMG-3595.jpg"},
+            { id: 18, name: "Asmaul Husna", studentId: "250120", currentAddress: "Rajapur, Pabna", permanentAddress: "Tangail", phone: "01743253000", facebook: "https://www.facebook.com/share/1C493KXREL/", email: "springshadow29@gmail.com", bloodGroup: "B+", photo: "https://i.ibb.co.com/Kz8MHrWr/att-0hp-PR7z4-WQOTrt293pm-XV7-EWb-T26-SGs-Rhsb-ZOMj-PPg0.jpg"},
+            { id: 19, name: "MD. NAHIDUL ISLAM", studentId: "250121", currentAddress: "Mohendropur, Pabna", permanentAddress: "Santhia, Pabna", phone: "01834145283", facebook: "https://www.facebook.com/nahidul.cse.pust", email: "nayeem5650@outlook.com", bloodGroup: "B+", photo: "https://i.ibb.co.com/mCTPBwM6/fbc0d8ae-16d5-46fc-9353-2066456953ad.jpg"},
+            { id: 20, name:"Salauddin Ayyuve", studentId:"250122", currentAddress:"Mujahid Club", permanentAddress: "Shajadpure,Sirajganj ", phone: "01318856637", facebook: "https://www.facebook.com/share/17agXG6z6T/ ", email: "salauddinaiuve@gmail.com", bloodGroup: "B-", photo: "https://i.ibb.co.com/wZfKNsX6/477d429fd66df236ba92a46270e7b9d4.jpg"},
+            {id : 21, name : "Zahin Mahmud Daiyan", studentId : "250123", currentAddress : "Mahtab Tower, Pabna", permanentAddress : "Mohonpur, Natore", phone : "01701299258", facebook : "https://www.facebook.com/zahin.mahmud.daiyan.CSE.PUST", email : "zahinmahmuddaiyan271@gmail.com", bloodGroup : "O+", photo : "https://i.ibb.co.com/hRX7T65C/IMG-3538.jpg"},            { id: 22, name: "Mst. Khandakar  Jahida", studentId: "250124", currentAddress: "Munsurabad, Pabna", permanentAddress: "Polastoli, Tangail", phone: "01303341680", facebook: "https://www.facebook.com/share/1FBAjWHw1W/", email: "mstkhandakerjahida@gmail", bloodGroup: "O+", photo: "https://i.ibb.co.com/5xS6Gy7J/IMG-3587.jpg"},
+            { id: 23, name: "SHAHID-HASAN-FAHIM", studentId: "250125", currentAddress: "Mujahid Club", permanentAddress: "Nilphamari", phone: "01720988987", facebook: "https://www.facebook.com/share/1HLGbwMiFn/", email: "shfahimf@gmail.com", bloodGroup: "o+", photo: "https://i.ibb.co.com/Y7C5pXDJ/IMG-3535.jpg"},
+            { id: 24, name : "Fatema", studentId: "250127", currentAddress: "Rajapur, Pabna", permanentAddress : "Mirzapur, Tangail ", email : "mdalommiya205@gmail", phone: "01605991240", bloodGroup: "AB+", facebook : "https://www.facebook.com/share/17nodFe5rp/", photo: "https://i.ibb.co.com/fdxrnqkn/IMG-3565.jpg"},
+            { id: 25, name: "Mst.Soheli Aktar Akhi", studentId: "250128", currentAddress: "Degree Bot tola, Pabna" , permanentAddress: "Bera,Pabna", phone: "01875768594", facebook: "https://www.facebook.com/share/1Adm7jw1kh/", email: "soheliakhi999@gmail.com ", bloodGroup: "AB+", photo:"https://i.ibb.co.com/mrW07ccY/IMG-3554.jpg"},
+            { id: 26, name: "Khandaker Saiful Islam Tanvir", studentId: "250130", currentAddress: "Mujahid Club", permanentAddress: "Muradnagar, Cumilla", phone: "01602032209", facebook: "https://www.facebook.com/share/1AXbodyPma/", email: "Khandakertanvir151@gmail.com ", bloodGroup: "B+", photo: "https://i.ibb.co.com/5hc5PgvV/IMG-3530.jpg"},
+            { id: 27, name: "Md. Riyaz Ali", studentId: " 250132", currentAddress: " Mujahid Club", permanentAddress: "Rajshahi", phone: "01751812046", facebook: " https://www.facebook.com/share/17wXYyanuL/", email: "mdriyazali531@gmail.com", bloodGroup: "O+", photo: "https://i.ibb.co.com/fGMRnsgj/IMG-3533.jpg"},
+            { id: 28, name: "Sahadat Hossain", studentId: "250133", currentAddress: "Mahtab Tower, Pabna", permanentAddress: "Narsingdi", phone: "01994728770", facebook: "https://www.facebook.com/share/1BDsbwm6Lg/", email: "sahadathossain8162@gmail.com", bloodGroup: "O+", photo:"https://i.ibb.co.com/SXJSRnbp/IMG-3580.jpg"},
+            { id: 29, name: "Jagojit Chandro Barmon (Niloy)", studentId: "250134", currentAddress: "Rothghor, Pabna", permanentAddress: "Kurigram", phone: "01737232248", facebook: "https://www.facebook.com/niloy.roy.327548", email: "jagojitchandro@gmail.com", bloodGroup: "B+", photo: "https://i.ibb.co.com/MD9hqp2z/8a8f5f2a-e6b3-43fa-8b83-1bb6ecb1dc6a.jpg"},
+            { id: 30, name: "Nuruzzaman Nahid", studentId: "250135", currentAddress: "Mujahid Club", permanentAddress: "Jhenaidah", phone: "01516582229", facebook: "https://www.facebook.com/share/1BuGmo5qHY/", email: "nahid3739u@gmail.com", bloodGroup: "B+", photo: "https://i.ibb.co.com/HvtshpJ/IMG-3589.jpg"},
+            { id: 31, name: "Sameeha Zahan Mridula", studentId: "250136", currentAddress: "Mansurabad - 5, Pabna", permanentAddress: "Bera (North), Pabna", phone: "01950-377978", facebook: "https://www.facebook.com/sameeha.mridula", email: "sameehamridula@gmail.com", bloodGroup: "B+", photo: "https://i.ibb.co.com/Sw9SjzQZ/IMG-3552.jpg"},
+            { id: 32, name: "Mohd. Atiquzzaman Atiq", studentId: "250137", currentAddress: "Mahtab Tower, Pabna", permanentAddress: "Chapainawabganj", phone: "01331945616", facebook: "https://www.facebook.com/profile.php?id=61578032794410", email: "ahmedatik5616@gmail.com", bloodGroup: "B+", photo:"https://i.ibb.co.com/Q7mxsLYg/IMG-3591.jpg"},
+            { id: 33, name: "Samin Yesar Tousib ", studentId: "250138", currentAddress: "Mahtab Tower, Pabna", permanentAddress: "Guratipara Rangpur-5400", phone: "01318009252", facebook: "https://www.facebook.com/tousib.CSE.PUST", email: "tousibsaminyesar@gmail.com", bloodGroup: "AB+", photo: "https://i.ibb.co.com/WpKf38Tf/IMG-3550.jpg"},
+            { id: 34, name: "Md. Iftekar Rahman (Riad)", studentId: "250139", currentAddress: "Mujahid Club, Pabna", permanentAddress: "Rajshahi", phone: "01610077278", facebook: "https://www.facebook.com/share/1B5j9PeiVu/?mibextid=wwXIfr", email: "riadraj009@gmail.com", bloodGroup: "A+", photo: "https://i.ibb.co.com/xKvjx11D/IMG-2457.jpg" },
+            { id: 35, name: "Azizul Hoque Emon", studentId: "250140", currentAddress: "Homeopathy Moore", permanentAddress: "Cox's Bazar", phone: "01576688477", facebook: "https://www.facebook.com/profile.php?id=100074429367529", email: "azizulhoqueemon634@gmail.com", bloodGroup: "A+", photo: "https://i.ibb.co.com/8DMtgncZ/e85606f6-c293-4b97-9e7d-2da222c7bf0c.jpg"},
+            { id: 36, name: "Mst. Johura Khatun", studentId: "250141", currentAddress: "Rajapur, Pabna", permanentAddress: "Rajapur, Pabna", phone: "01752403522", facebook: "https://www.facebook.com/share/1DSpnpcvsY/",email: "fatematujjohura819@gmail.com", bloodGroup: "O+", photo: "https://i.ibb.co.com/6c5JCZzW/IMG-3597.jpg"}
         ];
 
         function getInitials(name) {
