@@ -2,7 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CSE Department Students</title>
+    <title>CSE Department Students - Login</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
         * {
@@ -80,6 +80,266 @@
             }
         }
 
+        /* Login Modal Styles */
+        #loginModal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(40, 40, 60, 0.95), rgba(20, 20, 40, 0.98));
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(15px);
+        }
+
+        .login-container {
+            position: relative;
+            z-index: 10000;
+            width: 100%;
+            max-width: 450px;
+            padding: 25px;
+        }
+
+        .login-box {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 50px 40px;
+            box-shadow: 0 25px 75px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, 
+                transparent 20%, 
+                rgba(102, 126, 234, 0.1) 40%, 
+                rgba(118, 75, 162, 0.1) 60%, 
+                transparent 80%);
+            animation: shimmer 8s infinite linear;
+            z-index: -1;
+        }
+
+        @keyframes shimmer {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .login-logo {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin: 0 auto 25px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5em;
+            color: white;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+            animation: logoPulse 2s infinite;
+        }
+
+        @keyframes logoPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .login-header h1 {
+            font-size: 2.2em;
+            background: linear-gradient(135deg, #fff, #f093fb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            font-weight: 900;
+        }
+
+        .login-header p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1em;
+        }
+
+        .login-form .input-group {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .login-form .input-group i {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #667eea;
+            font-size: 1.2em;
+            z-index: 2;
+        }
+
+        .login-form input {
+            width: 100%;
+            padding: 18px 20px 18px 60px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            color: white;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .login-form input:focus {
+            outline: none;
+            border-color: #667eea;
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+        }
+
+        .login-form input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border: none;
+            border-radius: 15px;
+            color: white;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .login-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .login-info {
+            text-align: center;
+            margin-top: 30px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9em;
+        }
+
+        .login-info strong {
+            color: #f093fb;
+        }
+
+        .error-message {
+            color: #ff6b6b;
+            text-align: center;
+            margin-top: 15px;
+            font-weight: 600;
+            display: none;
+        }
+
+        /* UPDATED: User Info Panel - Now inside header below time */
+        .header-right-section {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 10px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: white;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.1));
+            backdrop-filter: blur(10px);
+            padding: 8px 15px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .user-info.hidden {
+            opacity: 0;
+            transform: translateY(-20px);
+            pointer-events: none;
+        }
+
+        .user-info:hover {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.15));
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .user-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1em;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(102, 126, 234, 0.3);
+        }
+
+        .logout-btn {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a6f);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85em;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.4);
+        }
+
+        /* Hide main content initially */
+        .main-content {
+            display: none;
+            animation: fadeIn 1s ease;
+            position: relative;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Original styles for main content */
         .container {
             max-width: 1400px;
             margin: 0 auto;
@@ -88,49 +348,33 @@
         }
 
         header {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            width: 100%;
+            padding: 25px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-radius: 0 0 35px 35px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+            position: relative;
+            overflow: hidden;
+        }
 
-  width: 100%;
-  padding: 25px 40px;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-
-  border-radius: 0 0 35px 35px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
-
-  position: relative;
-  overflow: hidden;
-}
-
-/* Gradient Border */
-header::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-
-  height: 4px;
-
-  background: linear-gradient(
-    90deg,
-    #667eea,
-    #764ba2,
-    #f093fb,
-    #ff6b6b
-  );
-
-  border-radius: 0 0 35px 35px;
-}
-
+        header::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb, #ff6b6b);
+            border-radius: 0 0 35px 35px;
+        }
 
         .logo-section {
             display: flex;
@@ -713,6 +957,11 @@ header::after {
                 padding: 20px 25px;
             }
 
+            .header-right-section {
+                align-items: flex-start;
+                width: 100%;
+            }
+
             .time {
                 text-align: left;
             }
@@ -729,6 +978,35 @@ header::after {
             .header-text small {
                 font-size: 1.1em;
             }
+
+            .login-container {
+                padding: 15px;
+            }
+
+            .login-box {
+                padding: 30px 20px;
+            }
+
+            .login-header h1 {
+                font-size: 1.8em;
+            }
+
+            /* Mobile responsive for user-info */
+            .user-info {
+                gap: 8px;
+                padding: 6px 10px;
+            }
+            
+            .user-avatar {
+                width: 30px;
+                height: 30px;
+                font-size: 0.9em;
+            }
+            
+            .logout-btn {
+                padding: 5px 8px;
+                font-size: 0.8em;
+            }
         }
 
         /* Smooth scroll behavior */
@@ -744,57 +1022,253 @@ header::after {
     </style>
 </head>
 <body>
-    <div class="bg-shape shape1"></div>
-    <div class="bg-shape shape2"></div>
-    <div class="bg-shape shape3"></div>
-    <div class="bg-shape shape4"></div>
-
-    <div class="container">
-        <header>
-            <div class="logo-section">
-                <div class="logo-container">
-                    <img src="https://res.cloudinary.com/dcwnn9c0u/image/upload/v1766143395/ntbvvksdjnpcvvpq6itt.jpg" alt="CSE Logo" class="logo">
+    <!-- Login Modal -->
+    <div id="loginModal">
+        <div class="login-container">
+            <div class="login-box">
+                <div class="login-header">
+                    <div class="login-logo">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <h1>Welcome to CSE Department</h1>
+                    <p>Please login to access Student Directory</p>
                 </div>
-                <div class="header-text">
-                    <h2>Computer Science & Engineering</h2>
-                    <small>Pabna University of Science & Technology</small>
+                
+                <form class="login-form" id="loginForm">
+                    <div class="input-group">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="username" placeholder="Enter Username" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="password" placeholder="Enter Password" required>
+                    </div>
+                    
+                    <button type="submit" class="login-btn">
+                        <i class="fas fa-sign-in-alt"></i> Login to Dashboard
+                    </button>
+                </form>
+                
+                <div id="loginError" class="error-message">
+                    Invalid credentials. Please try again!
                 </div>
-            </div>
-            <div class="time" id="time"></div>
-        </header>
-
-        <div class="hero-section">
-            <h1>CSE Department Students</h1>
-            <div class="session-info">
-                <strong>Session:</strong> 2024-2025
-            </div>
-            
-            <div class="search-box">
-                <input type="text" id="search" placeholder="Search by name or student ID...">
-                <i class="fa-solid fa-search"></i>
-            </div>
-
-            <div class="stats">
-                <h2 id="totalCount">36</h2>
-                <p>Total Students</p>
+                
+                <!-- UPDATED: Cleaned up login info -->
+                <div class="login-info">
+                    <p><strong>Contact administrator for login credentials</strong></p>
+                </div>
             </div>
         </div>
-
-        <div class="student-grid" id="studentGrid"></div>
-
-        <footer>
-            <p>&copy; <span id="year"></span> Pabna University of Science & Technology. All rights reserved.</p>
-            <div class="footer-divider"></div>
-            <p>Computer Science & Engineering Department</p>
-        </footer>
     </div>
 
-    <div id="toast" class="toast">
-        <i class="fa-solid fa-check-circle"></i>
-        <span id="toast-text"></span>
+    <!-- Main Content (Hidden until login) -->
+    <div class="main-content" id="mainContent">
+        <div class="bg-shape shape1"></div>
+        <div class="bg-shape shape2"></div>
+        <div class="bg-shape shape3"></div>
+        <div class="bg-shape shape4"></div>
+
+        <div class="container">
+            <header>
+                <div class="logo-section">
+                    <div class="logo-container">
+                        <img src="https://i.ibb.co.com/TGk80qf/IMG-3527.jpg" alt="CSE Logo" class="logo">
+                    </div>
+                    <div class="header-text">
+                        <h2>Computer Science & Engineering</h2>
+                        <small>Pabna University of Science & Technology</small>
+                    </div>
+                </div>
+                <div class="header-right-section">
+                    <div class="time" id="time"></div>
+                    <!-- User Info Panel (Visible after login) - Now below time -->
+                    <div class="user-info" id="userInfo" style="display: none;">
+                        <div class="user-avatar" id="userAvatar">C</div>
+                        <button class="logout-btn" id="logoutBtn">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <div class="hero-section">
+                <h1>CSE Department Students</h1>
+                <div class="session-info">
+                    <strong>Session:</strong> 2024-2025
+                </div>
+                
+                <div class="search-box">
+                    <input type="text" id="search" placeholder="Search by name or student ID...">
+                    <i class="fa-solid fa-search"></i>
+                </div>
+
+                <div class="stats">
+                    <h2 id="totalCount">36</h2>
+                    <p>Total Students</p>
+                </div>
+            </div>
+
+            <div class="student-grid" id="studentGrid"></div>
+
+            <footer>
+                <p>&copy; <span id="year"></span> Pabna University of Science & Technology. All rights reserved.</p>
+                <div class="footer-divider"></div>
+                <p>Computer Science & Engineering Department</p>
+            </footer>
+        </div>
+
+        <div id="toast" class="toast">
+            <i class="fa-solid fa-check-circle"></i>
+            <span id="toast-text"></span>
+        </div>
     </div>
 
     <script>
+        // Database of valid users - Now only one user with encrypted password
+        const validUsers = [
+            { 
+                username: 'cse17', 
+                password: 'cHJpbWUxNw==',
+                displayName: 'CSE 17 Batch' 
+            }
+        ];
+
+        function decodePassword(encoded) {
+            return atob(encoded);
+        }
+
+        // DOM Elements
+        const loginModal = document.getElementById('loginModal');
+        const mainContent = document.getElementById('mainContent');
+        const userInfo = document.getElementById('userInfo');
+        const userAvatar = document.getElementById('userAvatar');
+        const loginForm = document.getElementById('loginForm');
+        const loginError = document.getElementById('loginError');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const currentYear = new Date().getFullYear();
+
+        // Check if user is already logged in
+        function checkLoginStatus() {
+            const isLoggedIn = localStorage.getItem('cseLoggedIn');
+            const username = localStorage.getItem('cseUsername');
+            const displayName = localStorage.getItem('cseDisplayName');
+            
+            if (isLoggedIn === 'true' && username === 'cse17') {
+                showMainContent(username, displayName);
+            } else {
+                showLoginModal();
+            }
+        }
+
+        // Show login modal
+        function showLoginModal() {
+            loginModal.style.display = 'flex';
+            mainContent.style.display = 'none';
+            userInfo.style.display = 'none';
+        }
+
+        // Show main content after login
+        function showMainContent(username, displayName) {
+            loginModal.style.display = 'none';
+            mainContent.style.display = 'block';
+            userInfo.style.display = 'flex';
+            
+            // Set user avatar with first letter
+            if (displayName) {
+                userAvatar.textContent = displayName.charAt(0).toUpperCase();
+            } else {
+                userAvatar.textContent = username.charAt(0).toUpperCase();
+            }
+            
+            // Initialize the rest of the application
+            initializeApp();
+        }
+
+        // Handle login form submission
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+            
+            const user = validUsers.find(u => 
+                u.username === username && 
+                decodePassword(u.password) === password
+            );
+            
+            if (user) {
+                // Successful login
+                localStorage.setItem('cseLoggedIn', 'true');
+                localStorage.setItem('cseUsername', username);
+                localStorage.setItem('cseDisplayName', user.displayName);
+                
+                showToast('Login successful! Welcome ' + user.displayName);
+                showMainContent(username, user.displayName);
+            } else {
+                // Failed login
+                loginError.style.display = 'block';
+                setTimeout(() => {
+                    loginError.style.display = 'none';
+                }, 3000);
+            }
+        });
+
+        // Handle logout
+        logoutBtn.addEventListener('click', function() {
+            localStorage.removeItem('cseLoggedIn');
+            localStorage.removeItem('cseUsername');
+            localStorage.removeItem('cseDisplayName');
+            
+            showToast('Logged out successfully!');
+            showLoginModal();
+            
+            // Clear form fields
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+        });
+
+        // Toast notification function
+        function showToast(message) {
+            const toast = document.getElementById("toast");
+            document.getElementById("toast-text").textContent = message;
+            toast.className = "toast show";
+            setTimeout(() => {
+                toast.className = toast.className.replace("show", "");
+            }, 2500);
+        }
+
+        // Initialize the main application
+        function initializeApp() {
+            // Set current year in footer
+            document.getElementById("year").textContent = currentYear;
+            
+            // Initialize time display
+            function updateTime() {
+                const now = new Date();
+                document.getElementById('time').innerHTML = 
+                    now.toLocaleTimeString() + "<br>" + 
+                    now.toLocaleDateString(undefined, {
+                        weekday: 'short',
+                        month: 'short',
+                        day: 'numeric',
+                        year: 'numeric'
+                    });
+            }
+            
+            setInterval(updateTime, 1000);
+            updateTime();
+            
+            // Initialize student directory
+            renderStudents();
+            
+            // Add search functionality
+            document.getElementById('search').addEventListener('input', (e) => {
+                renderStudents(e.target.value.toLowerCase());
+            });
+        }
+
+        // Student data and rendering functions (from original code)
         const students = [
             { id: 1, name: "Akhi Aktar Mim", 
 studentId: "250101"
@@ -810,7 +1284,7 @@ photo: "https://res.cloudinary.com/dcwnn9c0u/image/upload/v1766159783/gcsdrnsiee
             { id: 5, name: "Toufique Al Imran", studentId: "250106",currentAddress: "Mahtab tower, Pabna", permanentAddress: "Mohadevpur, Naogaon", phone: "01721798790", facebook: "https://www.facebook.com/toufiquealimran548", email: "toufiquealimran01@gmail.com", bloodGroup: "B+", photo: "https://res.cloudinary.com/dcwnn9c0u/image/upload/v1766164390/mzerwsh6zood2q5xn6si.jpg"},
             { id: 6, name: "Apurba Kumar", studentId: "250107",currentAddress: "Radhanagar, Pabna", permanentAddress: "Raninagar, Naogaon", phone: "01771076379", facebook: "https://www.facebook.com/share/1BYvu47bW7/", email: "apurbakumar340@gmail.com", bloodGroup: "O+", photo: "https://res.cloudinary.com/dcwnn9c0u/image/upload/v1766235225/wn2ocabzospxcwphjfsp.jpg"},
             { id: 7, name: "MD. MUHIBUR RAHMAN BHUIYAN", studentId: "250108",currentAddress: "Mujahid Club", permanentAddress: "Dhaka", phone: "01929354030", facebook: "https://www.facebook.com/md.antik.213468", email: "muhibur1109@gmail.com", bloodGroup: "B+", photo: "https://res.cloudinary.com/dcwnn9c0u/image/upload/v1766224109/tv7m8irtzvbb2kcbvmpo.jpg"},
-            { id: 8, name: "Md. Faruk Hossain", studentId: "250109",currentAddress: "Rajapur, Pabna", permanentAddress: "Birampur, Dinajpur", phone: "01516595496", facebook: "https://www.facebook.com/profile.php?id=100057254032930", email: "faruk1572005@gmail.com", bloodGroup: "O+", photo: "https://res.cloudinary.com/dcwnn9c0u/image/upload/v1766248689/h4swuuqtri4giognodgz.jpg"},
+            { id: 8, name: "Md. Faruk Hossain", studentId: "250109",currentAddress: "Rajapur, Pabna", permanentAddress: "Birampur, Dinajpur", phone: "01516595496", facebook: "https://www.facebook.com/profile.php?id=100057254032930", email: "faruk1572005@gmail.com", bloodGroup: "O+", photo: "https://i.ibb.co.com/LzFVsGwy/att-TQq-VL-nu-Cxb-G9-WAq-ETQ-Ld2uxr2-D9yv-Hp-KQ-Yh-VHr8g.jpg"},
             { id: 9, name: "Upama Saha", studentId: "250110",currentAddress: "Munsurabad, Pabna", permanentAddress: "Tangail", phone: "01327221457", facebook: "https://www.facebook.com/share/16kouSyzwK/?mibextid=wwXIfr", email: "uparnasaha0@gmail.com", bloodGroup: "B+", photo: "https://res.cloudinary.com/dcwnn9c0u/image/upload/v1766148102/gwedorv2cy2yqpe4tggj.jpg" },
             { id: 10, name: "Md. Mahfil Akter", studentId: "250111",currentAddress: "Mohisher Dipo", permanentAddress: "Naogaon", phone: "01716175548", facebook: "https://www.facebook.com/share/1HtVvXPhgA/", email: "mdmahfilakter@gmail.com", bloodGroup: "B+", photo: "https://i.ibb.co.com/3mFNptF3/IMG-3540.jpg"},
             { id: 11, name: "Md. Asadullah Atik",
@@ -825,7 +1299,7 @@ phone: "01874175415", facebook: "https://www.facebook.com/realasadullahatik",
             { id: 13, name: "Mst. Sumaiya Islam", studentId: " 250114",currentAddress: " Rajapur,Pabna", permanentAddress: " Gazipur Sadar,Gazipur", phone: " 01924465889", facebook: " https://www.facebook.com/sumaiya.islam.272223", email: "mst.sumaiyaislam424@gmail.com", bloodGroup: " AB+", photo: "https://res.cloudinary.com/dcwnn9c0u/image/upload/v1766214561/tuht9qa6testhtnewowu.jpg" },
             { id: 14, name: "Rima Jahan", studentId: "250115",currentAddress: "Forida Tower", permanentAddress: "Thakurgaon ", phone: "01909197188", facebook: "https://www.facebook.com/share/1AvdJzXmuB/", email: "rimajahansdp@gmail.com", bloodGroup: "B+", photo: ""},
             { id: 15, name: "MST. URMILA KHATUN", studentId: "250116",currentAddress: "Farida Tower", permanentAddress: "Naldanga, Natore", phone: "01626273480", facebook: "https://www.facebook.com/share/1AgvF7oeDv/", email: "urmilakhatun3456@gmail.com", bloodGroup: "B+", photo: "https://res.cloudinary.com/dcwnn9c0u/image/upload/v1766234861/gaejy8yceauikb5uhulh.jpg"},
-            { id: 16, name: "MD. Forhad Zaman", studentId: "250117",currentAddress: "Homoepathic Medical Mor", permanentAddress: "Godagari, Rajshahi", phone: "01630743003", facebook: "https://www.facebook.com/Forhad.pust.cse17", email: "forhad.af0@gmail.com", bloodGroup: "A+", photo: "https://res.cloudinary.com/dcwnn9c0u/image/upload/v1766240471/q0yjf87cg4pq3azoysp7.jpg"},
+            { id: 16, name: "MD. Forhad Zaman", studentId: "250117",currentAddress: "Homoepathic Medical Mor", permanentAddress: "Godagari, Rajshahi", phone: "01630743003", facebook: "https://www.facebook.com/Forhad.pust.cse17", email: "forhad.af0@gmail.com", bloodGroup: "A+", photo: "https://i.ibb.co.com/pvg7rxVJ/IMG-3578.jpg"},
             { id: 17, name: "MD.SOYAB HOSSAIN", studentId: "250119",currentAddress: "Mahtab Tower, Pabna", permanentAddress: "Sirajganj", phone: "01571054693", facebook: "https://www.facebook.com/profile.php?id=61578380370457", email: "soyab119678@gmail.com", bloodGroup: "B+", photo: "https://i.ibb.co.com/KjrJ0z7F/IMG-3595.jpg"},
             { id: 18, name: "Asmaul Husna",
 studentId: "250120",
@@ -838,7 +1312,7 @@ bloodGroup: "B+",
 photo: "https://res.cloudinary.com/dcwnn9c0u/image/upload/v1766163890/ktuzfunpnzxhbhqor9pe.jpg"},
             { id: 19, name: "MD. NAHIDUL ISLAM", studentId: "250121",currentAddress: "Mohendropur, Pabna", permanentAddress: "Santhia, Pabna", phone: "01834145283", facebook: "https://www.facebook.com/nahidul.cse.pust", email: "nayeem5650@outlook.com", bloodGroup: "B+", photo: "https://res.cloudinary.com/dcwnn9c0u/image/upload/v1766158512/oflfhamin7sdor9m7syo.jpg"},
             { id: 20, name:"Salauddin Ayyuve", studentId:"250122",currentAddress:"Mujahid Club", permanentAddress: "Shajadpure,Sirajganj ", phone: "01318856637", facebook: "https://www.facebook.com/share/17agXG6z6T/ ", email: "salauddinaiuve@gmail.com", bloodGroup: "B-", photo: "https://res.cloudinary.com/dcwnn9c0u/image/upload/v1766151639/eogujcllokxq90igrvqg.jpg"},
-            {id : 21, name : "Zahin Mahmud Daiyan", studentId : "250123", currentAddress : "Mahtab Tower, Pabna", permanentAddress : "Mohonpur, Natore", phone : "01701299258", facebook : "https://www.facebook.com/zahin.mahmud.daiyan.CSE.PUST", email : "zahinmahmuddaiyan271@gmail.com", bloodGroup : "O+", photo : "https://res.cloudinary.com/dcwnn9c0u/image/upload/v1766153355/dyaa4sw21ku0noarts5q.jpg"},            { id: 22, name: "Mst. Khandakar  Jahida", studentId: "250124",currentAddress: "Munsurabad, Pabna", permanentAddress: "Polastoli, Tangail", phone: "01303341680", facebook: "https://www.facebook.com/share/1FBAjWHw1W/", email: "mstkhandakerjahida@gmail", bloodGroup: "O+", photo: "https://res.cloudinary.com/dcwnn9c0u/image/upload/v1766243976/ppqmbqrtmdbesb1dtu6j.jpg"},
+            {id : 21, name : "Zahin Mahmud Daiyan", studentId : "250123", currentAddress : "Mahtab Tower, Pabna", permanentAddress : "Mohonpur, Natore", phone : "01701299258", facebook : "https://www.facebook.com/zahin.mahmud.daiyan.CSE.PUST", email : "zahinmahmuddaiyan271@gmail.com", bloodGroup : "O+", photo : "https://res.cloudinary.com/dcwnn9c0u/image/upload/v1766153355/dyaa4sw21ku0noarts5q.jpg"},            { id: 22, name: "Mst. Khandakar  Jahida", studentId: "250124",currentAddress: "Munsurabad, Pabna", permanentAddress: "Polastoli, Tangail", phone: "01303341680", facebook: "https://www.facebook.com/share/1FBAjWHw1W/", email: "mstkhandakerjahida@gmail", bloodGroup: "O+", photo: "https://i.ibb.co.com/5xS6Gy7J/IMG-3587.jpg"},
             { id: 23, name: "SHAHID-HASAN-FAHIM", studentId: "250125",currentAddress: "Mujahid Club", permanentAddress: "Nilphamari", phone: "01720988987", facebook: "https://www.facebook.com/share/1HLGbwMiFn/", email: "shfahimf@gmail.com", bloodGroup: "o+", photo: "https://res.cloudinary.com/dcwnn9c0u/image/upload/v1766163197/fazeg798mpcjlw37nw1i.jpg"},
             { id: 24, name : "Fatema",
 studentId: "250127",
@@ -858,9 +1332,9 @@ bloodGroup: "AB+",
  photo:"https://res.cloudinary.com/dcwnn9c0u/image/upload/v1766163515/xngyl6q8eqfvnipe6ram.jpg"},
             { id: 26, name: "Khandaker Saiful Islam Tanvir", studentId: "250130",currentAddress: "Mujahid Club", permanentAddress: "Muradnagar, Cumilla", phone: "01602032209", facebook: "https://www.facebook.com/share/1AXbodyPma/", email: "Khandakertanvir151@gmail.com ", bloodGroup: "B+", photo: "https://res.cloudinary.com/dcwnn9c0u/image/upload/v1766150081/ihvsrpvfrqmvhuhwwu9p.jpg"},
             { id: 27, name: "Md. Riyaz Ali", studentId: " 250132",currentAddress: " Mujahid Club", permanentAddress: "Rajshahi", phone: "01751812046", facebook: " https://www.facebook.com/share/17wXYyanuL/", email: "mdriyazali531@gmail.com", bloodGroup: "O+", photo: "https://res.cloudinary.com/dcwnn9c0u/image/upload/v1766151474/gzbochse0bez3q1dxqk3.jpg"},
-            { id: 28, name: "Sahadat Hossain", studentId: "250133",currentAddress: "Mahtab Tower, Pabna", permanentAddress: "Narsingdi", phone: "01994728770", facebook: "https://www.facebook.com/share/1BDsbwm6Lg/", email: "sahadathossain8162@gmail.com", bloodGroup: "O+", photo:"https://res.cloudinary.com/dcwnn9c0u/image/upload/v1766241261/ix4jf0ccw1xxdyww9jkd.jpg"},
+            { id: 28, name: "Sahadat Hossain", studentId: "250133",currentAddress: "Mahtab Tower, Pabna", permanentAddress: "Narsingdi", phone: "01994728770", facebook: "https://www.facebook.com/share/1BDsbwm6Lg/", email: "sahadathossain8162@gmail.com", bloodGroup: "O+", photo:"https://i.ibb.co.com/SXJSRnbp/IMG-3580.jpg"},
             { id: 29, name: "Jagojit Chandro Barmon (Niloy)", studentId: "250134",currentAddress: "Rothghor, Pabna", permanentAddress: "Kurigram", phone: "01737232248", facebook: "https://www.facebook.com/niloy.roy.327548", email: "jagojitchandro@gmail.com", bloodGroup: "B+", photo: "https://i.ibb.co.com/MD9hqp2z/8a8f5f2a-e6b3-43fa-8b83-1bb6ecb1dc6a.jpg"},
-            { id: 30, name: "Nuruzzaman Nahid", studentId: "250135",currentAddress: "Mujahid Club", permanentAddress: "Jhenaidah", phone: "01516582229", facebook: "https://www.facebook.com/share/1BuGmo5qHY/", email: "nahid3739u@gmail.com", bloodGroup: "B+", photo: "https://res.cloudinary.com/dcwnn9c0u/image/upload/v1766246961/ss30c9q09r9a7hi2u1hz.jpg"},
+            { id: 30, name: "Nuruzzaman Nahid", studentId: "250135",currentAddress: "Mujahid Club", permanentAddress: "Jhenaidah", phone: "01516582229", facebook: "https://www.facebook.com/share/1BuGmo5qHY/", email: "nahid3739u@gmail.com", bloodGroup: "B+", photo: "https://i.ibb.co.com/HvtshpJ/IMG-3589.jpg"},
             { id: 31, name: "Sameeha Zahan Mridula",
 studentId: "250136",
 currentAddress: "Mansurabad - 5, Pabna",
@@ -870,7 +1344,7 @@ facebook: "https://www.facebook.com/sameeha.mridula",
 email: "sameehamridula@gmail.com", 
 bloodGroup: "B+",
 photo: "https://res.cloudinary.com/dcwnn9c0u/image/upload/v1766162609/fycszgvvfw8tzfrthj8d.jpg"},
-            { id: 32, name: "Mohd. Atiquzzaman Atiq", studentId: "250137",currentAddress: "Mahtab Tower, Pabna", permanentAddress: "Chapainawabganj", phone: "01331945616", facebook: "https://www.facebook.com/profile.php?id=61578032794410", email: "ahmedatik5616@gmail.com", bloodGroup: "B+", photo:"https://res.cloudinary.com/dcwnn9c0u/image/upload/v1766247261/w7wmkthdohqmv9dx1xfo.jpg"},
+            { id: 32, name: "Mohd. Atiquzzaman Atiq", studentId: "250137",currentAddress: "Mahtab Tower, Pabna", permanentAddress: "Chapainawabganj", phone: "01331945616", facebook: "https://www.facebook.com/profile.php?id=61578032794410", email: "ahmedatik5616@gmail.com", bloodGroup: "B+", photo:"https://i.ibb.co.com/Q7mxsLYg/IMG-3591.jpg"},
             { id: 33, name: "Samin Yesar Tousib ", studentId: "250138",currentAddress: "Mahtab Tower, Pabna", permanentAddress: "Guratipara Rangpur-5400", phone: "01318009252", facebook: "https://www.facebook.com/tousib.CSE.PUST", email: "tousibsaminyesar@gmail.com", bloodGroup: "AB+", photo: "https://res.cloudinary.com/dcwnn9c0u/image/upload/v1766161314/n7fvetmklv5i0th8s4el.jpg"},
             { id: 34, name: "Md. Iftekar Rahman (Riad)", studentId: "250139",currentAddress: "Mujahid Club, Pabna", permanentAddress: "Rajshahi", phone: "01610077278", facebook: "https://www.facebook.com/share/1B5j9PeiVu/?mibextid=wwXIfr", email: "riadraj009@gmail.com", bloodGroup: "A+", photo: "https://res.cloudinary.com/dcwnn9c0u/image/upload/v1766160917/zxdiccvjzip6tobsj6vt.jpg" },
             { id: 35, name: "Azizul Hoque Emon",
@@ -891,15 +1365,6 @@ photo: "https://res.cloudinary.com/dcwnn9c0u/image/upload/v1766228742/dued0vw2cx
 
         function copyText(text) {
             navigator.clipboard.writeText(text).then(() => showToast(`${text} copied!`));
-        }
-
-        function showToast(message) {
-            const toast = document.getElementById("toast");
-            document.getElementById("toast-text").textContent = message;
-            toast.className = "toast show";
-            setTimeout(() => {
-                toast.className = toast.className.replace("show", "");
-            }, 2500);
         }
 
         function renderStudents(filter = "") {
@@ -926,12 +1391,6 @@ photo: "https://res.cloudinary.com/dcwnn9c0u/image/upload/v1766228742/dued0vw2cx
                         <div class="student-info">
                             <div class="student-name">${student.name}</div>
                             <div class="student-id"><i class="fa-solid fa-id-card"></i> ${student.studentId}</div>
-                            ${student.session ? `
-                                <div class="info-item">
-                                    <i class="fa-solid fa-graduation-cap icon-session"></i>
-                                    <span>Session: ${student.session}</span>
-                                </div>
-                            ` : ''}
                             ${student.currentAddress ? `
                                 <div class="info-item">
                                     <i class="fa-solid fa-location-dot icon-current"></i>
@@ -987,26 +1446,8 @@ photo: "https://res.cloudinary.com/dcwnn9c0u/image/upload/v1766228742/dued0vw2cx
             document.getElementById('totalCount').textContent = count;
         }
 
-        document.getElementById('search').addEventListener('input', (e) => {
-            renderStudents(e.target.value.toLowerCase());
-        });
-
-        function updateTime() {
-            const now = new Date();
-            document.getElementById('time').innerHTML = 
-                now.toLocaleTimeString() + "<br>" + 
-                now.toLocaleDateString(undefined, {
-                    weekday: 'short',
-                    month: 'short',
-                    day: 'numeric',
-                    year: 'numeric'
-                });
-        }
-
-        setInterval(updateTime, 1000);
-        updateTime();
-        renderStudents();
-        document.getElementById("year").textContent = new Date().getFullYear();
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', checkLoginStatus);
     </script>
 </body>
 </html>
