@@ -1557,7 +1557,7 @@
                 
                 <div class="privacy-modal-body">
                     <div class="university-header">
-                        <strong>Privacy Policy</strong><br></p>
+                        <strong>Privacy Policy</strong><br>
                     </div>
                     
                     <div class="policy-section">
@@ -1636,7 +1636,7 @@
                 
                 <div class="terms-modal-body">
                     <div class="university-header">
-                        <strong>Terms of Use</strong><br></p>
+                        <strong>Terms of Use</strong><br>
                     </div>
                     
                     <div class="policy-section">
