@@ -19,7 +19,6 @@
             overflow-x: hidden;
         }
 
-        /* Enhanced animated background */
         .bg-shape {
             position: fixed;
             border-radius: 50%;
@@ -80,7 +79,6 @@
             }
         }
 
-        /* Login Modal Styles */
         #loginModal {
             position: fixed;
             top: 0;
@@ -258,7 +256,6 @@
             display: none;
         }
 
-        /* Quick Actions Panel */
         .quick-actions {
             display: flex;
             justify-content: center;
@@ -297,7 +294,6 @@
             font-size: 1.3em;
         }
 
-        /* User Info Panel */
         .header-right-section {
             display: flex;
             flex-direction: column;
@@ -366,7 +362,6 @@
             box-shadow: 0 8px 20px rgba(255, 107, 107, 0.4);
         }
 
-        /* Hide main content initially */
         .main-content {
             display: none;
             animation: fadeIn 1s ease;
@@ -378,7 +373,6 @@
             to { opacity: 1; }
         }
 
-        /* Original styles for main content */
         .container {
             max-width: 1400px;
             margin: 0 auto;
@@ -662,23 +656,24 @@
             text-transform: uppercase;
         }
 
+        /* STUDENT GRID - Picture size increased */
         .student-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-            gap: 40px;
-            padding: 30px;
-            margin-bottom: 60px;
+            grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+            gap: 35px;
+            padding: 25px;
+            margin-bottom: 50px;
         }
 
         .student-card {
             background: linear-gradient(135deg, rgba(255,255,255,0.98), rgba(255,255,255,0.95));
-            border-radius: 35px;
-            box-shadow: 0 15px 45px rgba(0,0,0,0.15);
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.12);
             overflow: hidden;
-            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             animation: cardFadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) backwards;
-            border: 2px solid rgba(255,255,255,0.6);
+            border: 1px solid rgba(255,255,255,0.6);
         }
 
         .student-card:nth-child(6n+1) { animation-delay: 0.1s; }
@@ -691,7 +686,7 @@
         @keyframes cardFadeIn {
             from {
                 opacity: 0;
-                transform: translateY(50px) scale(0.9);
+                transform: translateY(30px) scale(0.95);
             }
             to {
                 opacity: 1;
@@ -699,48 +694,25 @@
             }
         }
 
-        .student-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 7px;
-            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb, #ff6b6b, #667eea);
-            background-size: 300% 100%;
-            animation: gradientSlide 4s linear infinite;
-            transform: scaleX(0);
-            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            border-radius: 35px 35px 0 0;
-        }
-
-        @keyframes gradientSlide {
-            0% { background-position: 0% 0%; }
-            100% { background-position: 300% 0%; }
-        }
-
-        .student-card:hover::before {
-            transform: scaleX(1);
-        }
-
         .student-card:hover {
-            transform: translateY(-20px) scale(1.03);
-            box-shadow: 0 30px 70px rgba(0,0,0,0.25);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
         }
 
+        /* Increased photo container height */
         .photo-container {
             position: relative;
             overflow: hidden;
             height: 320px;
             background: linear-gradient(135deg, #667eea, #764ba2);
-            border-radius: 35px 35px 0 0;
+            border-radius: 25px 25px 0 0;
         }
 
         .student-photo, .initials {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .initials {
@@ -748,102 +720,95 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 5em;
+            font-size: 4.5em;
             font-weight: 900;
             color: white;
-            text-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            text-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
 
         .student-card:hover .student-photo {
-            transform: scale(1.18) rotate(3deg);
+            transform: scale(1.12) rotate(2deg);
         }
 
         .student-card:hover .initials {
-            transform: scale(1.1);
-        }
-
-        .photo-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.7) 100%);
-            opacity: 0;
-            transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .student-card:hover .photo-overlay {
-            opacity: 1;
+            transform: scale(1.08);
         }
 
         .student-info {
-            padding: 32px;
+            padding: 22px;
         }
 
         .student-name {
             font-size: 1.4em;
-            font-weight: 900;
+            font-weight: 800;
             background: linear-gradient(135deg, #667eea, #764ba2);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            margin-bottom: 16px;
+            margin-bottom: 14px;
             text-align: center;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.3px;
             transition: all 0.3s ease;
-        }
-
-        .student-card:hover .student-name {
-            letter-spacing: 1px;
+            line-height: 1.2;
         }
 
         .student-id {
             color: white;
             font-size: 1.05em;
-            margin-bottom: 20px;
-            padding: 12px 24px;
+            margin-bottom: 18px;
+            padding: 9px 18px;
             background: linear-gradient(135deg, #667eea, #764ba2);
-            border-radius: 35px;
+            border-radius: 22px;
             display: inline-block;
-            font-weight: 800;
-            box-shadow: 0 8px 20px rgba(102,126,234,0.4);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 700;
+            box-shadow: 0 5px 15px rgba(102,126,234,0.3);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            line-height: 1;
         }
 
         .student-card:hover .student-id {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 30px rgba(102,126,234,0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102,126,234,0.4);
         }
 
         .info-item {
             display: flex;
             align-items: center;
-            gap: 12px;
-            margin: 12px 0;
-            font-size: 1em;
+            gap: 10px;
+            margin: 8px 0;
+            font-size: 0.95em;
             color: #444;
-            flex-wrap: wrap;
-            padding: 10px 15px;
-            border-radius: 20px;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 8px 12px;
+            border-radius: 15px;
+            transition: all 0.3s ease;
             font-weight: 500;
+            line-height: 1;
+            min-height: 36px;
         }
 
         .info-item:hover {
-            background: rgba(102,126,234,0.1);
-            transform: translateX(8px);
+            background: rgba(102,126,234,0.08);
+            transform: translateX(4px);
         }
 
         .info-item i {
-            width: 22px;
-            font-size: 1.15em;
+            width: 20px;
+            font-size: 1.1em;
             transition: transform 0.3s ease;
+            flex-shrink: 0;
         }
 
         .info-item:hover i {
-            transform: scale(1.2);
+            transform: scale(1.1);
+        }
+
+        .info-item span,
+        .info-item a {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            flex: 1;
+            line-height: 1.2;
         }
 
         .info-item a {
@@ -869,51 +834,57 @@
             background: linear-gradient(135deg, #667eea, #764ba2);
             cursor: pointer;
             color: white;
-            padding: 8px 12px;
-            border-radius: 15px;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            font-size: 0.95em;
+            padding: 6px 12px;
+            border-radius: 12px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 0.9em;
+            flex-shrink: 0;
+            line-height: 1;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .copy-btn:hover {
-            transform: scale(1.15) rotate(5deg);
-            box-shadow: 0 8px 20px rgba(102,126,234,0.5);
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(102,126,234,0.4);
         }
 
         .toast {
             visibility: hidden;
-            min-width: 300px;
+            min-width: 280px;
             background: linear-gradient(135deg, #2d3436, #000000);
             color: #fff;
             text-align: center;
-            border-radius: 25px;
-            padding: 20px 30px;
+            border-radius: 20px;
+            padding: 15px 25px;
             position: fixed;
             left: 50%;
             bottom: 30px;
             transform: translateX(-50%);
-            font-size: 16px;
+            font-size: 15px;
             z-index: 9999;
             opacity: 0;
-            transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 15px;
-            box-shadow: 0 15px 50px rgba(0,0,0,0.5);
-            border: 2px solid rgba(255,255,255,0.15);
-            font-weight: 700;
+            gap: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.15);
+            font-weight: 600;
         }
 
         .toast.show {
             visibility: visible;
             opacity: 1;
-            bottom: 70px;
+            bottom: 60px;
         }
 
         .toast i {
             color: #26de81;
-            font-size: 1.5em;
+            font-size: 1.3em;
             animation: checkPop 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
         }
 
@@ -927,17 +898,17 @@
             background: linear-gradient(135deg, #2c3e50 0%, #34495e 50%, #2c3e50 100%);
             color: white;
             text-align: center;
-            padding: 45px 30px;
+            padding: 35px 25px;
             position: relative;
             overflow: hidden;
-            margin-top: 60px;
-            border-radius: 35px 35px 0 0;
+            margin-top: 50px;
+            border-radius: 25px 25px 0 0;
         }
 
         footer::before {
             content: '💻';
             position: absolute;
-            font-size: 180px;
+            font-size: 150px;
             opacity: 0.05;
             top: 50%;
             left: 50%;
@@ -946,31 +917,31 @@
         }
 
         footer p {
-            margin: 12px 0;
+            margin: 10px 0;
             opacity: 0.95;
             position: relative;
             z-index: 2;
-            font-size: 1.1em;
+            font-size: 1em;
             font-weight: 600;
             transition: all 0.3s ease;
         }
 
         footer p:hover {
             opacity: 1;
-            transform: translateY(-2px);
+            transform: translateY(-1px);
         }
 
         .footer-divider {
-            width: 120px;
-            height: 4px;
+            width: 100px;
+            height: 3px;
             background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
-            margin: 18px auto;
-            border-radius: 10px;
+            margin: 15px auto;
+            border-radius: 8px;
             transition: all 0.3s ease;
         }
 
         footer:hover .footer-divider {
-            width: 160px;
+            width: 140px;
         }
 
         /* Announcement Modal Styles */
@@ -988,7 +959,7 @@
             z-index: 9998;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: 15px;
             backdrop-filter: blur(10px);
         }
 
@@ -997,13 +968,13 @@
         .terms-content,
         .contact-content {
             background: linear-gradient(135deg, #1a3a8f, #2d5cc2);
-            border-radius: 25px;
-            max-width: 1100px;
+            border-radius: 20px;
+            max-width: 1000px;
             width: 95%;
             max-height: 90vh;
             overflow-y: auto;
             color: white;
-            box-shadow: 0 25px 75px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
             border: 1px solid rgba(255, 255, 255, 0.1);
             position: relative;
         }
@@ -1024,7 +995,7 @@
         .privacy-modal-header,
         .terms-modal-header,
         .contact-modal-header {
-            padding: 25px 30px;
+            padding: 20px 25px;
             background: rgba(0, 0, 0, 0.2);
             border-bottom: 1px solid rgba(255, 255,255, 0.1);
             display: flex;
@@ -1037,10 +1008,10 @@
         .terms-modal-header h2,
         .contact-modal-header h2 {
             margin: 0;
-            font-size: 1.8em;
+            font-size: 1.6em;
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
         }
 
         .announcement-modal-header h2 i {
@@ -1066,11 +1037,11 @@
             background: rgba(255, 255, 255, 0.1);
             border: none;
             color: white;
-            width: 45px;
-            height: 45px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             cursor: pointer;
-            font-size: 1.2em;
+            font-size: 1.1em;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1089,142 +1060,142 @@
         .privacy-modal-body,
         .terms-modal-body,
         .contact-modal-body {
-            padding: 30px;
+            padding: 25px;
         }
 
         .university-header {
             text-align: center;
-            margin-bottom: 30px;
-            padding-bottom: 20px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
             border-bottom: 2px solid rgba(255, 255, 255, 0.1);
         }
 
         .university-header h3 {
-            font-size: 1.8em;
-            margin-bottom: 8px;
+            font-size: 1.6em;
+            margin-bottom: 6px;
             color: #f1f3f9;
         }
 
         .university-header p {
-            font-size: 1.1em;
+            font-size: 1em;
             opacity: 0.9;
-            line-height: 1.6;
+            line-height: 1.5;
         }
 
         .announcement-info-box {
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 30px;
-            border-left: 5px solid #f1c40f;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 25px;
+            border-left: 4px solid #f1c40f;
         }
 
         .announcement-info-box h4 {
             margin-top: 0;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             color: #f1c40f;
-            font-size: 1.3em;
+            font-size: 1.2em;
         }
 
         .announcement-image-container {
             overflow-x: auto;
-            margin-bottom: 30px;
-            border-radius: 15px;
+            margin-bottom: 25px;
+            border-radius: 12px;
             border: 1px solid rgba(255, 255, 255, 0.1);
             background: rgba(0, 0, 0, 0.2);
             text-align: center;
-            padding: 20px;
+            padding: 15px;
         }
 
         .announcement-image {
             max-width: 100%;
             height: auto;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border-radius: 8px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
             display: block;
             margin: 0 auto;
         }
 
         .announcement-notice {
             background: rgba(231, 76, 60, 0.15);
-            border-radius: 15px;
-            padding: 20px;
-            margin-top: 30px;
-            border-left: 5px solid #e74c3c;
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 25px;
+            border-left: 4px solid #e74c3c;
         }
 
         .announcement-notice p {
             margin: 0;
-            font-size: 1.05em;
-            line-height: 1.6;
+            font-size: 1em;
+            line-height: 1.5;
         }
 
         .announcement-footer {
-            margin-top: 30px;
-            padding-top: 20px;
+            margin-top: 25px;
+            padding-top: 15px;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             text-align: center;
-            font-size: 0.95em;
+            font-size: 0.9em;
             opacity: 0.8;
         }
 
         /* Policy and Terms Content Styles */
         .policy-section {
             background: rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 25px;
-            border-left: 4px solid #3498db;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-left: 3px solid #3498db;
         }
 
         .policy-section h4 {
             color: #3498db;
-            margin-bottom: 15px;
-            font-size: 1.3em;
+            margin-bottom: 10px;
+            font-size: 1.2em;
         }
 
         .policy-section p,
         .policy-section ul {
-            margin-bottom: 10px;
-            line-height: 1.6;
+            margin-bottom: 8px;
+            line-height: 1.5;
         }
 
         .policy-section ul {
-            padding-left: 20px;
+            padding-left: 18px;
         }
 
         .policy-section li {
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
 
         .contact-info {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+            margin-top: 25px;
         }
 
         .contact-item {
             background: rgba(255, 255, 255, 0.1);
-            padding: 20px;
-            border-radius: 15px;
+            padding: 15px;
+            border-radius: 12px;
             text-align: center;
             transition: transform 0.3s ease;
         }
 
         .contact-item:hover {
-            transform: translateY(-5px);
+            transform: translateY(-4px);
             background: rgba(255, 255, 255, 0.15);
         }
 
         .contact-item i {
-            font-size: 2em;
-            margin-bottom: 15px;
+            font-size: 1.8em;
+            margin-bottom: 12px;
             color: #2ecc71;
         }
 
         .contact-item h4 {
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             color: #f1c40f;
         }
 
@@ -1243,8 +1214,8 @@
         .footer-links {
             display: flex;
             justify-content: center;
-            gap: 25px;
-            margin: 20px 0;
+            gap: 20px;
+            margin: 15px 0;
             flex-wrap: wrap;
         }
 
@@ -1253,32 +1224,42 @@
             text-decoration: none;
             font-weight: 600;
             transition: all 0.3s ease;
-            padding: 8px 15px;
-            border-radius: 20px;
+            padding: 6px 12px;
+            border-radius: 18px;
             background: rgba(255, 255, 255, 0.1);
         }
 
         .footer-links a:hover {
             background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-3px);
+            transform: translateY(-2px);
         }
 
         @media (max-width: 768px) {
             .hero-section h1 {
-                font-size: 2.5em;
-                letter-spacing: -1px;
+                font-size: 2.2em;
+                letter-spacing: -0.5px;
             }
 
             .student-grid {
-                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-                gap: 30px;
+                grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+                gap: 25px;
+                padding: 20px;
+            }
+
+            /* Adjusted photo height for mobile */
+            .photo-container {
+                height: 280px;
+            }
+
+            .initials {
+                font-size: 3.8em;
             }
 
             header {
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 20px;
-                padding: 20px 25px;
+                gap: 15px;
+                padding: 20px;
             }
 
             .header-right-section {
@@ -1288,19 +1269,20 @@
 
             .time {
                 text-align: left;
+                font-size: 1em;
             }
 
             .logo {
-                width: 65px;
-                height: 65px;
+                width: 60px;
+                height: 60px;
             }
 
             .header-text h2 {
-                font-size: 1.6em;
+                font-size: 1.4em;
             }
 
             .header-text small {
-                font-size: 1.1em;
+                font-size: 1em;
             }
 
             .login-container {
@@ -1312,7 +1294,7 @@
             }
 
             .login-header h1 {
-                font-size: 1.8em;
+                font-size: 1.6em;
             }
 
             .user-info {
@@ -1336,29 +1318,42 @@
             }
 
             .action-btn {
-                padding: 12px 20px;
+                padding: 12px 18px;
                 font-size: 0.9em;
+            }
+
+            .info-item {
+                font-size: 0.9em;
+                padding: 6px 10px;
+                margin: 5px 0;
+                min-height: 34px;
+            }
+
+            .copy-btn {
+                padding: 5px 10px;
+                font-size: 0.85em;
+                height: 30px;
             }
 
             .announcement-content,
             .privacy-content,
             .terms-content,
             .contact-content {
-                padding: 15px;
+                padding: 12px;
             }
 
             .announcement-modal-header,
             .privacy-modal-header,
             .terms-modal-header,
             .contact-modal-header {
-                padding: 20px;
+                padding: 15px;
             }
 
             .announcement-modal-header h2,
             .privacy-modal-header h2,
             .terms-modal-header h2,
             .contact-modal-header h2 {
-                font-size: 1.5em;
+                font-size: 1.3em;
             }
 
             .announcement-image-container {
@@ -1366,12 +1361,28 @@
             }
 
             .footer-links {
-                gap: 15px;
+                gap: 12px;
             }
 
             .footer-links a {
-                padding: 6px 12px;
-                font-size: 0.9em;
+                padding: 5px 10px;
+                font-size: 0.85em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .student-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 15px;
+            }
+            
+            .photo-container {
+                height: 260px;
+            }
+            
+            .initials {
+                font-size: 3.5em;
             }
         }
 
@@ -1513,13 +1524,7 @@
                 
                 <div class="announcement-modal-body">
                     <div class="university-header">
-                        <h3>Department of Computer Science and Engineering</h3>
-                        <p>Pabna University of Science and Technology<br>
-                        Pabna-6600, Bangladesh<br>
-                        Phone: +88 0731 64876 | Web: www.pust.ac.bd | Email: cse@pust.ac.bd</p>
-                        <p style="margin-top: 15px;"></p>
                     </div>
-                    
                     <div class="announcement-info-box">
                         <h4>B. Sc Engineering 1<sup>st</sup> Year 1<sup>st</sup> Semester Examination-2025</h4>
                         <p><strong>Session:</strong> 2024-25</p>
@@ -1552,8 +1557,6 @@
                 
                 <div class="privacy-modal-body">
                     <div class="university-header">
-                        <h3>Department of Computer Science and Engineering</h3>
-                        <p>Pabna University of Science and Technology<br>
                         <strong>Privacy Policy</strong><br></p>
                     </div>
                     
@@ -1579,7 +1582,6 @@
                     <div class="policy-section">
                         <h4>3. Data Storage & Security</h4>
                         <ul>
-                            <li>Passwords are encoded using Base64 (for demonstration purposes only)</li>
                             <li>User session data is stored in browser's localStorage</li>
                             <li>All student data displayed is publicly available departmental information</li>
                             <li>No sensitive personal data is collected or stored on our servers</li>
@@ -1634,8 +1636,6 @@
                 
                 <div class="terms-modal-body">
                     <div class="university-header">
-                        <h3>Department of Computer Science and Engineering</h3>
-                        <p>Pabna University of Science and Technology<br>
                         <strong>Terms of Use</strong><br></p>
                     </div>
                     
@@ -1740,7 +1740,7 @@
                 
                 <div class="contact-modal-body">
                     <div class="university-header">
-                        <h3>Department of Computer Science and Engineering</h3>
+                        <h3>Computer Science and Engineering Batch 17<sup>th</sup></h3>
                         <p>Pabna University of Science and Technology</p>
                     </div>
                     
@@ -2171,7 +2171,7 @@ photo: "https://i.ibb.co.com/8DMtgncZ/e85606f6-c293-4b97-9e7d-2da222c7bf0c.jpg"}
                             ${student.facebook ? `
                                 <div class="info-item">
                                     <i class="fa-brands fa-facebook icon-facebook"></i>
-                                    <a href="${student.facebook}" target="_blank" style="color: #1877f2; text-decoration: none;">Facebook</a>
+                                    <a href="${student.facebook}" target="_blank">Facebook</a>
                                     <button class="copy-btn" onclick="copyText('${student.facebook}')">
                                         <i class="fa-regular fa-copy"></i>
                                     </button>
