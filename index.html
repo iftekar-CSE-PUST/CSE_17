@@ -668,23 +668,38 @@
             text-transform: uppercase;
         }
 
+        /* UPDATED: Student Grid System */
         .student-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-            gap: 40px;
-            padding: 30px;
+            grid-template-columns: repeat(2, 1fr); /* Default for mobile: 2 columns */
+            gap: 20px;
+            padding: 20px;
             margin-bottom: 60px;
+            justify-items: center;
         }
 
+        /* Desktop: 3 columns */
+        @media (min-width: 992px) {
+            .student-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 30px;
+                padding: 30px;
+            }
+        }
+
+        /* Student Card - Fixed Size */
         .student-card {
             background: linear-gradient(135deg, rgba(255,255,255,0.98), rgba(255,255,255,0.95));
-            border-radius: 35px;
+            border-radius: 25px;
             box-shadow: 0 15px 45px rgba(0,0,0,0.15);
             overflow: hidden;
             transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             animation: cardFadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) backwards;
             border: 2px solid rgba(255,255,255,0.6);
+            width: 100%;
+            max-width: 380px; /* Fixed maximum width */
+            margin: 0 auto;
         }
 
         .student-card:nth-child(6n+1) { animation-delay: 0.1s; }
@@ -717,7 +732,7 @@
             animation: gradientSlide 4s linear infinite;
             transform: scaleX(0);
             transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            border-radius: 35px 35px 0 0;
+            border-radius: 25px 25px 0 0;
         }
 
         @keyframes gradientSlide {
@@ -730,16 +745,16 @@
         }
 
         .student-card:hover {
-            transform: translateY(-20px) scale(1.03);
+            transform: translateY(-15px) scale(1.03);
             box-shadow: 0 30px 70px rgba(0,0,0,0.25);
         }
 
         .photo-container {
             position: relative;
             overflow: hidden;
-            height: 320px;
+            height: 280px; /* Fixed height */
             background: linear-gradient(135deg, #667eea, #764ba2);
-            border-radius: 35px 35px 0 0;
+            border-radius: 25px 25px 0 0;
         }
 
         .student-photo, .initials {
@@ -754,18 +769,18 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 5em;
+            font-size: 4em;
             font-weight: 900;
             color: white;
             text-shadow: 0 8px 20px rgba(0,0,0,0.3);
         }
 
         .student-card:hover .student-photo {
-            transform: scale(1.18) rotate(3deg);
+            transform: scale(1.15) rotate(2deg);
         }
 
         .student-card:hover .initials {
-            transform: scale(1.1);
+            transform: scale(1.05);
         }
 
         .photo-overlay {
@@ -784,38 +799,41 @@
         }
 
         .student-info {
-            padding: 32px;
+            padding: 25px;
         }
 
         .student-name {
-            font-size: 1.4em;
+            font-size: 1.3em;
             font-weight: 900;
             background: linear-gradient(135deg, #667eea, #764ba2);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            margin-bottom: 16px;
+            margin-bottom: 15px;
             text-align: center;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             transition: all 0.3s ease;
+            line-height: 1.3;
         }
 
         .student-card:hover .student-name {
-            letter-spacing: 1px;
+            letter-spacing: 0.8px;
         }
 
         .student-id {
             color: white;
-            font-size: 1.05em;
+            font-size: 1em;
             margin-bottom: 20px;
-            padding: 12px 24px;
+            padding: 10px 20px;
             background: linear-gradient(135deg, #667eea, #764ba2);
-            border-radius: 35px;
+            border-radius: 25px;
             display: inline-block;
             font-weight: 800;
             box-shadow: 0 8px 20px rgba(102,126,234,0.4);
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 100%;
+            text-align: center;
         }
 
         .student-card:hover .student-id {
@@ -823,39 +841,59 @@
             box-shadow: 0 12px 30px rgba(102,126,234,0.5);
         }
 
+        /* UPDATED: Info Item with aligned copy button */
         .info-item {
             display: flex;
             align-items: center;
-            gap: 12px;
-            margin: 12px 0;
-            font-size: 1em;
+            justify-content: space-between;
+            margin: 10px 0;
+            font-size: 0.95em;
             color: #444;
-            flex-wrap: wrap;
-            padding: 10px 15px;
-            border-radius: 20px;
+            padding: 10px 12px;
+            border-radius: 15px;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             font-weight: 500;
+            min-height: 45px;
         }
 
         .info-item:hover {
             background: rgba(102,126,234,0.1);
-            transform: translateX(8px);
+            transform: translateX(5px);
+        }
+
+        .info-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+            overflow: hidden;
         }
 
         .info-item i {
-            width: 22px;
-            font-size: 1.15em;
+            width: 20px;
+            font-size: 1.1em;
             transition: transform 0.3s ease;
+            flex-shrink: 0;
         }
 
         .info-item:hover i {
-            transform: scale(1.2);
+            transform: scale(1.1);
+        }
+
+        .info-text {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            flex: 1;
         }
 
         .info-item a {
             color: inherit;
             text-decoration: none;
             transition: color 0.3s;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         .info-item a:hover {
@@ -870,19 +908,27 @@
         .icon-email { color: #ff6348; }
         .icon-blood { color: #eb3b5a; }
 
+        /* UPDATED: Copy Button - Always aligned to right */
         .copy-btn {
             border: none;
             background: linear-gradient(135deg, #667eea, #764ba2);
             cursor: pointer;
             color: white;
-            padding: 8px 12px;
-            border-radius: 15px;
+            padding: 6px 10px;
+            border-radius: 12px;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            font-size: 0.95em;
+            font-size: 0.85em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            flex-shrink: 0;
+            margin-left: 10px;
         }
 
         .copy-btn:hover {
-            transform: scale(1.15) rotate(5deg);
+            transform: scale(1.1) rotate(5deg);
             box-shadow: 0 8px 20px rgba(102,126,234,0.5);
         }
 
@@ -1275,9 +1321,47 @@
                 letter-spacing: -1px;
             }
 
+            /* Mobile: 2 columns */
             .student-grid {
-                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-                gap: 30px;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+                padding: 15px;
+            }
+
+            .student-card {
+                max-width: 100%;
+                border-radius: 20px;
+            }
+
+            .photo-container {
+                height: 200px;
+            }
+
+            .student-info {
+                padding: 20px 15px;
+            }
+
+            .student-name {
+                font-size: 1.1em;
+            }
+
+            .student-id {
+                font-size: 0.9em;
+                padding: 8px 15px;
+                margin-bottom: 15px;
+            }
+
+            .info-item {
+                padding: 8px 10px;
+                font-size: 0.9em;
+                min-height: 40px;
+            }
+
+            .copy-btn {
+                width: 32px;
+                height: 32px;
+                padding: 5px;
+                font-size: 0.8em;
             }
 
             header {
@@ -1382,6 +1466,15 @@
             .footer-links a {
                 padding: 5px 10px;
                 font-size: 0.85em;
+            }
+        }
+
+        /* Medium screens (tablets) */
+        @media (min-width: 769px) and (max-width: 991px) {
+            .student-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 25px;
+                padding: 25px;
             }
         }
 
@@ -2147,7 +2240,7 @@ photo: "https://i.ibb.co.com/8DMtgncZ/e85606f6-c293-4b97-9e7d-2da222c7bf0c.jpg"}
                     card.className = 'student-card';
                     
                     const photoHTML = student.photo 
-                        ? `<img src="${student.photo}" alt="${student.name}" class="student-photo" onerror="this.parentElement.innerHTML='<div class=\\'initials\\'>${getInitials(student.name)}</div>'">`
+                        ? `<img src="${student.photo}" alt="${student.name}" class="student-photo" onerror="this.parentElement.innerHTML='<div class='initials'>${getInitials(student.name)}</div>'">`
                         : `<div class="initials">${getInitials(student.name)}</div>`;
                     
                     card.innerHTML = `
@@ -2160,20 +2253,26 @@ photo: "https://i.ibb.co.com/8DMtgncZ/e85606f6-c293-4b97-9e7d-2da222c7bf0c.jpg"}
                             <div class="student-id"><i class="fa-solid fa-id-card"></i> ${student.studentId}</div>
                             ${student.currentAddress ? `
                                 <div class="info-item">
-                                    <i class="fa-solid fa-location-dot icon-current"></i>
-                                    <span>Current: ${student.currentAddress}</span>
+                                    <div class="info-content">
+                                        <i class="fa-solid fa-location-dot icon-current"></i>
+                                        <span class="info-text">Current: ${student.currentAddress}</span>
+                                    </div>
                                 </div>
                             ` : ''}
                             ${student.permanentAddress ? `
                                 <div class="info-item">
-                                    <i class="fa-solid fa-house icon-permanent"></i>
-                                    <span>Permanent: ${student.permanentAddress}</span>
+                                    <div class="info-content">
+                                        <i class="fa-solid fa-house icon-permanent"></i>
+                                        <span class="info-text">Permanent: ${student.permanentAddress}</span>
+                                    </div>
                                 </div>
                             ` : ''}
                             ${student.phone ? `
                                 <div class="info-item">
-                                    <i class="fa-solid fa-phone icon-phone"></i>
-                                    <span>${student.phone}</span>
+                                    <div class="info-content">
+                                        <i class="fa-solid fa-phone icon-phone"></i>
+                                        <span class="info-text">${student.phone}</span>
+                                    </div>
                                     <button class="copy-btn" onclick="copyText('${student.phone}')">
                                         <i class="fa-regular fa-copy"></i>
                                     </button>
@@ -2181,8 +2280,10 @@ photo: "https://i.ibb.co.com/8DMtgncZ/e85606f6-c293-4b97-9e7d-2da222c7bf0c.jpg"}
                             ` : ''}
                             ${student.facebook ? `
                                 <div class="info-item">
-                                    <i class="fa-brands fa-facebook icon-facebook"></i>
-                                    <a href="${student.facebook}" target="_blank" style="color: #1877f2; text-decoration: none;">Facebook</a>
+                                    <div class="info-content">
+                                        <i class="fa-brands fa-facebook icon-facebook"></i>
+                                        <a href="${student.facebook}" target="_blank" class="info-text">Facebook</a>
+                                    </div>
                                     <button class="copy-btn" onclick="copyText('${student.facebook}')">
                                         <i class="fa-regular fa-copy"></i>
                                     </button>
@@ -2190,8 +2291,10 @@ photo: "https://i.ibb.co.com/8DMtgncZ/e85606f6-c293-4b97-9e7d-2da222c7bf0c.jpg"}
                             ` : ''}
                             ${student.email ? `
                                 <div class="info-item">
-                                    <i class="fa-solid fa-envelope icon-email"></i>
-                                    <span>${student.email}</span>
+                                    <div class="info-content">
+                                        <i class="fa-solid fa-envelope icon-email"></i>
+                                        <span class="info-text">${student.email}</span>
+                                    </div>
                                     <button class="copy-btn" onclick="copyText('${student.email}')">
                                         <i class="fa-regular fa-copy"></i>
                                     </button>
@@ -2199,8 +2302,10 @@ photo: "https://i.ibb.co.com/8DMtgncZ/e85606f6-c293-4b97-9e7d-2da222c7bf0c.jpg"}
                             ` : ''}
                             ${student.bloodGroup ? `
                                 <div class="info-item">
-                                    <i class="fa-solid fa-tint icon-blood"></i>
-                                    <span>Blood: ${student.bloodGroup}</span>
+                                    <div class="info-content">
+                                        <i class="fa-solid fa-tint icon-blood"></i>
+                                        <span class="info-text">Blood: ${student.bloodGroup}</span>
+                                    </div>
                                 </div>
                             ` : ''}
                         </div>
