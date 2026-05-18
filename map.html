@@ -31,7 +31,7 @@
     .header p { font-size: .84rem; opacity: .9; margin-top: 3px; }
     .main-container { display: flex; height: calc(100vh - 94px); overflow: hidden; }
     .map-container { flex: 1; min-width: 0; position: relative; }
-    #bangladesh-map { height: 100%; width: 100%; background: #86aaa1; }
+    #bangladesh-map { height: 100%; width: 100%; background: #86aaa1; touch-action: none; overscroll-behavior: contain; }
     .leaflet-tile-pane { filter: brightness(0.78) saturate(1.25) contrast(1.12); }
     .sidebar {
       width: 360px;
@@ -945,7 +945,66 @@ const studentsData = decodeAsciiJson([
 
     const fallbackPhoto = "https://randomuser.me/api/portraits/lego/1.jpg";
 
-    const map = L.map('bangladesh-map', { zoomControl: true, preferCanvas: true }).setView([23.685, 90.356], 7.85);
+    const map = L.map('bangladesh-map', {
+ zoomControl: true,
+ preferCanvas: true,
+ // We handle laptop touchpad gestures manually so it feels like Google Maps:
+ // 2-finger swipe = move/pan, 2-finger pinch = zoom in/out.
+ scrollWheelZoom: false,
+ wheelDebounceTime: 10,
+ wheelPxPerZoomLevel: 80
+}).setView([23.685, 90.356], 7.85);
+
+ // === Laptop touchpad gesture support (Google Maps-like) ===
+ // On most laptop touchpads:
+ // - Two-finger swipe fires a wheel event without Ctrl => pan/move the map.
+ // - Two-finger pinch fires a wheel event with Ctrl/Meta => zoom around cursor.
+ function enableGoogleMapsLikeTouchpad(mapInstance) {
+ const container = mapInstance.getContainer();
+ let zoomRemainder = 0;
+ let lastZoomTime = 0;
+
+ function normalizeWheelDelta(e) {
+ // deltaMode: 0=pixels, 1=lines, 2=pages
+ const scale = e.deltaMode === 1 ? 16 : (e.deltaMode === 2 ? window.innerHeight : 1);
+ return { x: e.deltaX * scale, y: e.deltaY * scale };
+ }
+
+ container.addEventListener('wheel', function(e) {
+ // Keep the gesture inside the map instead of scrolling the page.
+ e.preventDefault();
+ e.stopPropagation();
+
+ const d = normalizeWheelDelta(e);
+ const isPinchZoom = e.ctrlKey || e.metaKey;
+
+ if (isPinchZoom) {
+ // Pinch zoom: small deltas accumulate, then zoom in/out around mouse position.
+ zoomRemainder += d.y;
+ const now = performance.now();
+ const threshold = 42;
+ if (Math.abs(zoomRemainder) >= threshold || now - lastZoomTime > 140) {
+ const direction = zoomRemainder > 0 ? -1 : 1; // positive deltaY means zoom out
+ const nextZoom = Math.max(
+ mapInstance.getMinZoom(),
+ Math.min(mapInstance.getMaxZoom(), mapInstance.getZoom() + direction)
+ );
+ const point = L.point(e.offsetX, e.offsetY);
+ const latlng = mapInstance.containerPointToLatLng(point);
+ mapInstance.setZoomAround(latlng, nextZoom, { animate: true });
+ zoomRemainder = 0;
+ lastZoomTime = now;
+ }
+ return;
+ }
+
+ // Two-finger swipe/pan. A small multiplier gives a Google Maps-like feel.
+ const panSpeed = 1.05;
+ mapInstance.panBy([d.x * panSpeed, d.y * panSpeed], { animate: false });
+ }, { passive: false });
+ }
+ enableGoogleMapsLikeTouchpad(map);
+
     map.createPane('districtBordersPane');
     map.getPane('districtBordersPane').style.zIndex = 360;
     map.createPane('districtLabelsPane');
