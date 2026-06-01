@@ -1488,6 +1488,372 @@
   .student-map-modal-header h3 { font-size: .9rem; }
 }
 
+/* =====================================================
+   ADMIN DASHBOARD STYLES (mobile-first)
+   ===================================================== */
+#adminBtn {
+    background: linear-gradient(135deg, #f59e0b, #ef4444);
+    color: #fff;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    display: none; /* shown only when admin is logged in */
+    align-items: center;
+    gap: 6px;
+    margin-right: 8px;
+    box-shadow: 0 6px 20px rgba(239, 68, 68, 0.35);
+    transition: transform .2s ease, box-shadow .2s ease;
+    font-size: .9rem;
+}
+#adminBtn:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(239,68,68,.5); }
+#adminBtn.visible { display: inline-flex; }
+
+.admin-badge {
+    display: inline-block;
+    background: linear-gradient(135deg,#f59e0b,#ef4444);
+    color: #fff;
+    font-size: .65rem;
+    padding: 2px 8px;
+    border-radius: 999px;
+    margin-left: 6px;
+    letter-spacing: 1px;
+    font-weight: 800;
+    vertical-align: middle;
+}
+
+#adminOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(2, 6, 23, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 15000;
+    display: none;
+    align-items: stretch;
+    justify-content: center;
+    padding: 0;
+    overflow-y: auto;
+}
+#adminOverlay.show { display: flex; }
+
+.admin-panel {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    background: linear-gradient(180deg, #0b1226 0%, #060a1a 100%);
+    border-left: 1px solid var(--glass-border);
+    border-right: 1px solid var(--glass-border);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    color: var(--text-light);
+}
+
+.admin-header {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    background: rgba(6, 10, 26, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--glass-border);
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+.admin-header h2 {
+    font-family: "Orbitron", sans-serif;
+    font-size: 1.05rem;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.admin-header h2 i { color: #f59e0b; }
+.admin-close {
+    background: rgba(255,255,255,.06);
+    border: 1px solid var(--glass-border);
+    color: #fff;
+    width: 38px; height: 38px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background .2s;
+}
+.admin-close:hover { background: rgba(239,68,68,.25); }
+
+.admin-tabs {
+    display: flex;
+    gap: 6px;
+    padding: 10px;
+    overflow-x: auto;
+    background: rgba(255,255,255,.02);
+    border-bottom: 1px solid var(--glass-border);
+    -webkit-overflow-scrolling: touch;
+}
+.admin-tab {
+    background: rgba(255,255,255,.04);
+    border: 1px solid var(--glass-border);
+    color: var(--text-gray);
+    padding: 9px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: .85rem;
+    white-space: nowrap;
+    transition: all .2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+.admin-tab:hover { color: #fff; background: rgba(255,255,255,.08); }
+.admin-tab.active {
+    background: linear-gradient(135deg, var(--gradient-blue), var(--gradient-purple));
+    color: #fff;
+    border-color: transparent;
+}
+
+.admin-body { padding: 16px; }
+.admin-section { display: none; }
+.admin-section.active { display: block; animation: adminFade .25s ease; }
+@keyframes adminFade { from { opacity:0; transform: translateY(6px);} to {opacity:1; transform:none;} }
+
+.admin-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    margin-bottom: 18px;
+}
+.admin-stat-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 14px;
+    padding: 14px;
+    position: relative;
+    overflow: hidden;
+}
+.admin-stat-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(59,130,246,.15), transparent);
+    pointer-events: none;
+}
+.admin-stat-card .v {
+    font-family: "Orbitron", sans-serif;
+    font-size: 1.6rem;
+    color: #fff;
+    font-weight: 800;
+}
+.admin-stat-card .l {
+    color: var(--text-gray);
+    font-size: .8rem;
+    margin-top: 4px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.admin-stat-card i {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-size: 1.4rem;
+    opacity: .35;
+}
+
+.admin-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 14px;
+    padding: 14px;
+    margin-bottom: 14px;
+}
+.admin-card h3 {
+    font-size: 1rem;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.admin-card h3 i { color: var(--primary-glow); }
+
+.admin-blood-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(90px,1fr)); gap: 8px; }
+.admin-blood-chip {
+    background: rgba(239,68,68,.12);
+    border: 1px solid rgba(239,68,68,.35);
+    border-radius: 10px;
+    padding: 8px;
+    text-align: center;
+    font-size: .85rem;
+}
+.admin-blood-chip b { display: block; font-size: 1.1rem; color: #fff; }
+
+.admin-form { display: grid; grid-template-columns: 1fr; gap: 10px; }
+@media (min-width: 640px) { .admin-form { grid-template-columns: 1fr 1fr; } }
+.admin-form .full { grid-column: 1 / -1; }
+.admin-form label { font-size: .75rem; color: var(--text-gray); text-transform: uppercase; letter-spacing: 1px; }
+.admin-form input, .admin-form textarea, .admin-form select {
+    width: 100%;
+    padding: 11px 12px;
+    background: rgba(255,255,255,.04);
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
+    color: #fff;
+    font-family: inherit;
+    font-size: .95rem;
+    outline: none;
+    transition: border-color .2s, background .2s;
+}
+.admin-form input:focus, .admin-form textarea:focus, .admin-form select:focus {
+    border-color: var(--primary-glow);
+    background: rgba(255,255,255,.06);
+}
+.admin-form textarea { min-height: 90px; resize: vertical; }
+
+.admin-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 16px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: .9rem;
+    transition: transform .15s, box-shadow .15s, opacity .15s;
+}
+.admin-btn:active { transform: scale(.97); }
+.admin-btn.primary { background: linear-gradient(135deg, var(--gradient-blue), var(--gradient-purple)); color: #fff; }
+.admin-btn.danger { background: linear-gradient(135deg, #ef4444, #b91c1c); color: #fff; }
+.admin-btn.ghost { background: rgba(255,255,255,.06); color: #fff; border: 1px solid var(--glass-border); }
+.admin-btn.warn { background: linear-gradient(135deg, #f59e0b, #d97706); color: #fff; }
+
+.admin-toolbar {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+}
+.admin-toolbar input[type="text"] {
+    flex: 1 1 200px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid var(--glass-border);
+    background: rgba(255,255,255,.04);
+    color: #fff;
+    font-size: .9rem;
+}
+
+.admin-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 12px; border: 1px solid var(--glass-border); }
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 640px;
+    font-size: .88rem;
+}
+.admin-table th, .admin-table td {
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+    vertical-align: middle;
+}
+.admin-table th {
+    background: rgba(255,255,255,.04);
+    color: var(--text-gray);
+    text-transform: uppercase;
+    font-size: .72rem;
+    letter-spacing: 1px;
+    position: sticky; top: 0;
+}
+.admin-table tr:hover { background: rgba(255,255,255,.03); }
+.admin-table .row-actions { display: flex; gap: 6px; }
+.admin-table .icon-btn {
+    background: rgba(255,255,255,.06);
+    border: 1px solid var(--glass-border);
+    color: #fff;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: .85rem;
+}
+.admin-table .icon-btn.edit:hover { background: rgba(59,130,246,.3); }
+.admin-table .icon-btn.del:hover { background: rgba(239,68,68,.3); }
+.admin-table .mini-photo {
+    width: 36px; height: 36px; border-radius: 50%;
+    object-fit: cover;
+    background: linear-gradient(135deg, var(--gradient-blue), var(--gradient-purple));
+    display: inline-flex; align-items: center; justify-content: center;
+    color: #fff; font-weight: 800; font-size: .75rem;
+    flex-shrink: 0;
+}
+
+.admin-log {
+    max-height: 280px;
+    overflow-y: auto;
+    background: rgba(0,0,0,.25);
+    border-radius: 10px;
+    padding: 10px;
+    font-family: "Courier New", monospace;
+    font-size: .8rem;
+    color: #cbd5e1;
+}
+.admin-log .entry { padding: 4px 0; border-bottom: 1px dashed rgba(255,255,255,.06); }
+.admin-log .entry:last-child { border-bottom: none; }
+.admin-log .entry .t { color: #64748b; margin-right: 8px; }
+.admin-log .entry .u { color: #f59e0b; font-weight: 700; }
+.admin-log .entry .a { color: #60a5fa; }
+
+.admin-empty {
+    text-align: center;
+    padding: 30px 10px;
+    color: var(--text-gray);
+}
+.admin-empty i { font-size: 2.2rem; opacity: .4; margin-bottom: 8px; display:block; }
+
+/* Confirm dialog */
+#confirmDialog {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,.7);
+    z-index: 17000;
+    display: none;
+    align-items: center; justify-content: center;
+    padding: 20px;
+}
+#confirmDialog.show { display: flex; }
+.confirm-box {
+    background: #0b1226;
+    border: 1px solid var(--glass-border);
+    padding: 20px;
+    border-radius: 14px;
+    width: 100%;
+    max-width: 380px;
+    text-align: center;
+}
+.confirm-box h4 { margin-bottom: 8px; }
+.confirm-box p { color: var(--text-gray); margin-bottom: 16px; font-size: .9rem; }
+.confirm-box .actions { display: flex; gap: 8px; justify-content: center; }
+
+/* Header mobile polish */
+@media (max-width: 640px) {
+    .header-center-info { display: none !important; }
+    .header-nav { gap: 6px; }
+    #adminBtn { padding: 7px 10px; font-size: .8rem; }
+    #adminBtn span.lbl { display: none; } /* icon-only on tiny screens */
+    .admin-stat-card .v { font-size: 1.3rem; }
+    .admin-header h2 { font-size: .95rem; }
+    .admin-body { padding: 12px; }
+}
+
+/* Login modal polish on small screens */
+@media (max-width: 480px) {
+    .login-box { padding: 26px 20px !important; margin: 0 12px; }
+    .login-header h1 { font-size: 1.2rem !important; }
+    .login-btn { padding: 12px !important; font-size: .95rem !important; }
+}
+
  </style>
     </head>
     <body oncontextmenu="return false;" onkeydown="disableShortcuts(event)">
@@ -1541,6 +1907,9 @@
                 </div>
                 <div class="header-center-info" id="timeDisplay"></div>
                 <nav class="header-nav">
+                    <button id="adminBtn" title="Admin Dashboard">
+                        <i class="fas fa-user-shield"></i><span class="lbl">Admin</span>
+                    </button>
                     <button id="logoutBtn" title="Logout"><i class="fas fa-power-off"></i></button>
                 </nav>
             </header>
@@ -1669,8 +2038,7 @@
                                 <a href="tel:01610077278"><i class="fas fa-phone"></i> 01610077278</a>
                             </li>
                             <li>
-                                <a href="mailto:riadraj009@gmail.com"
-                                    ><i class="fas fa-envelope"></i> riadraj009@gmail.com</a
+                                <a href="/cdn-cgi/l/email-protection#02706b636670636832323b42656f636b6e2c616d6f"><i class="fas fa-envelope"></i> <span class="__cf_email__" data-cfemail="86f4efe7e2f4e7ecb6b6bfc6e1ebe7efeaa8e5e9eb">[email&#160;protected]</span></a
                                 >
                             </li>
                         </ul>
@@ -1827,6 +2195,229 @@
             </div>
         </div>
        
+<!-- ===== ADMIN DASHBOARD OVERLAY ===== -->
+<div id="adminOverlay" aria-hidden="true">
+    <div class="admin-panel">
+        <div class="admin-header">
+            <h2><i class="fas fa-user-shield"></i> Admin Dashboard <span class="admin-badge">ADMIN</span></h2>
+            <button class="admin-close" id="adminCloseBtn" title="Close"><i class="fas fa-times"></i></button>
+        </div>
+
+        <div class="admin-tabs" role="tablist">
+            <button class="admin-tab active" data-tab="dash"><i class="fas fa-chart-line"></i> Overview</button>
+            <button class="admin-tab" data-tab="students"><i class="fas fa-users"></i> Manage Students</button>
+            <button class="admin-tab" data-tab="add"><i class="fas fa-user-plus"></i> Add Student</button>
+            <button class="admin-tab" data-tab="ann"><i class="fas fa-bullhorn"></i> Announcement</button>
+            <button class="admin-tab" data-tab="activity"><i class="fas fa-clipboard-list"></i> Activity Log</button>
+            <button class="admin-tab" data-tab="settings"><i class="fas fa-cog"></i> Settings</button>
+        </div>
+
+        <div class="admin-body">
+            <!-- DASHBOARD -->
+            <section class="admin-section active" id="adminSection-dash">
+                <div class="admin-stats-grid">
+                    <div class="admin-stat-card">
+                        <i class="fas fa-users"></i>
+                        <div class="v" id="adminStatTotal">0</div>
+                        <div class="l">Total Students</div>
+                    </div>
+                    <div class="admin-stat-card">
+                        <i class="fas fa-envelope"></i>
+                        <div class="v" id="adminStatEmail">0</div>
+                        <div class="l">With Email</div>
+                    </div>
+                    <div class="admin-stat-card">
+                        <i class="fas fa-phone"></i>
+                        <div class="v" id="adminStatPhone">0</div>
+                        <div class="l">With Phone</div>
+                    </div>
+                    <div class="admin-stat-card">
+                        <i class="fas fa-image"></i>
+                        <div class="v" id="adminStatPhoto">0</div>
+                        <div class="l">With Photo</div>
+                    </div>
+                    <div class="admin-stat-card">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <div class="v" id="adminStatLogins">0</div>
+                        <div class="l">Total Logins</div>
+                    </div>
+                    <div class="admin-stat-card">
+                        <i class="fas fa-clock"></i>
+                        <div class="v" id="adminStatSession" style="font-size:.95rem;">—</div>
+                        <div class="l">Session Started</div>
+                    </div>
+                </div>
+
+                <div class="admin-card">
+                    <h3><i class="fas fa-tint"></i> Blood Group Distribution</h3>
+                    <div class="admin-blood-list" id="adminBloodList"></div>
+                </div>
+
+                <div class="admin-card">
+                    <h3><i class="fas fa-bolt"></i> Quick Actions</h3>
+                    <div style="display:flex; flex-wrap:wrap; gap:8px;">
+                        <button class="admin-btn primary" data-jump="add"><i class="fas fa-user-plus"></i> Add Student</button>
+                        <button class="admin-btn warn" data-jump="ann"><i class="fas fa-bullhorn"></i> Edit Announcement</button>
+                        <button class="admin-btn ghost" id="adminExportBtn"><i class="fas fa-download"></i> Export JSON</button>
+                        <button class="admin-btn danger" id="adminResetBtn"><i class="fas fa-undo"></i> Reset to Defaults</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- MANAGE STUDENTS -->
+            <section class="admin-section" id="adminSection-students">
+                <div class="admin-toolbar">
+                    <input type="text" id="adminSearchInput" placeholder="Search by name or ID..." />
+                    <button class="admin-btn primary" data-jump="add"><i class="fas fa-plus"></i> New</button>
+                </div>
+                <div class="admin-table-wrap">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Student</th>
+                                <th>ID</th>
+                                <th>Phone</th>
+                                <th>Blood</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminStudentsBody"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- ADD / EDIT STUDENT -->
+            <section class="admin-section" id="adminSection-add">
+                <div class="admin-card">
+                    <h3><i class="fas fa-user-plus"></i> <span id="adminFormTitle">Add New Student</span></h3>
+                    <form id="adminStudentForm" class="admin-form" autocomplete="off">
+                        <input type="hidden" id="sfId" />
+                        <div>
+                            <label>Full Name *</label>
+                            <input type="text" id="sfName" required maxlength="80" placeholder="e.g. John Doe" />
+                        </div>
+                        <div>
+                            <label>Student ID *</label>
+                            <input type="text" id="sfStudentId" required maxlength="20" placeholder="e.g. 250199" />
+                        </div>
+                        <div>
+                            <label>Phone</label>
+                            <input type="text" id="sfPhone" maxlength="20" placeholder="01XXXXXXXXX" />
+                        </div>
+                        <div>
+                            <label>Blood Group</label>
+                            <select id="sfBlood">
+                                <option value="">— Select —</option>
+                                <option>A+</option><option>A-</option>
+                                <option>B+</option><option>B-</option>
+                                <option>AB+</option><option>AB-</option>
+                                <option>O+</option><option>O-</option>
+                            </select>
+                        </div>
+                        <div class="full">
+                            <label>Current Address</label>
+                            <input type="text" id="sfCurrent" maxlength="160" />
+                        </div>
+                        <div class="full">
+                            <label>Permanent Address</label>
+                            <input type="text" id="sfPermanent" maxlength="160" />
+                        </div>
+                        <div class="full">
+                            <label>Email</label>
+                            <input type="email" id="sfEmail" maxlength="120" />
+                        </div>
+                        <div class="full">
+                            <label>Facebook URL</label>
+                            <input type="url" id="sfFacebook" maxlength="240" placeholder="https://facebook.com/..." />
+                        </div>
+                        <div class="full">
+                            <label>Photo URL</label>
+                            <input type="url" id="sfPhoto" maxlength="400" placeholder="https://i.ibb.co/..." />
+                        </div>
+                        <div class="full" style="display:flex; gap:8px; flex-wrap:wrap; margin-top:6px;">
+                            <button type="submit" class="admin-btn primary"><i class="fas fa-save"></i> Save Student</button>
+                            <button type="button" class="admin-btn ghost" id="adminFormReset"><i class="fas fa-eraser"></i> Clear</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- ANNOUNCEMENT -->
+            <section class="admin-section" id="adminSection-ann">
+                <div class="admin-card">
+                    <h3><i class="fas fa-bullhorn"></i> Manage Announcement</h3>
+                    <form id="adminAnnForm" class="admin-form">
+                        <div class="full">
+                            <label>Title</label>
+                            <input type="text" id="annTitle" maxlength="100" placeholder="Announcement title" />
+                        </div>
+                        <div class="full">
+                            <label>Message</label>
+                            <textarea id="annBody" maxlength="800" placeholder="Type the message visible to all students..."></textarea>
+                        </div>
+                        <div class="full">
+                            <label>Image URL (optional)</label>
+                            <input type="url" id="annImage" maxlength="400" />
+                        </div>
+                        <div class="full" style="display:flex; gap:8px; flex-wrap:wrap;">
+                            <button type="submit" class="admin-btn primary"><i class="fas fa-save"></i> Save</button>
+                            <button type="button" class="admin-btn danger" id="annClearBtn"><i class="fas fa-trash"></i> Clear</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- ACTIVITY LOG -->
+            <section class="admin-section" id="adminSection-activity">
+                <div class="admin-card">
+                    <h3><i class="fas fa-clipboard-list"></i> Recent Activity</h3>
+                    <div class="admin-log" id="adminLog"></div>
+                    <div style="margin-top:10px;">
+                        <button class="admin-btn ghost" id="adminClearLog"><i class="fas fa-broom"></i> Clear Log</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SETTINGS -->
+            <section class="admin-section" id="adminSection-settings">
+                <div class="admin-card">
+                    <h3><i class="fas fa-id-badge"></i> Admin Account</h3>
+                    <p style="color:var(--text-gray); font-size:.9rem;">
+                        Logged in as <b style="color:#fff;">admin</b>. Admin credentials are hardcoded and cannot be changed from this panel.
+                    </p>
+                </div>
+                <div class="admin-card">
+                    <h3><i class="fas fa-database"></i> Data</h3>
+                    <p style="color:var(--text-gray); font-size:.9rem; margin-bottom:10px;">
+                        Student data and announcement are stored locally in your browser (localStorage).
+                    </p>
+                    <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                        <button class="admin-btn ghost" id="adminExportBtn2"><i class="fas fa-download"></i> Export Students JSON</button>
+                        <button class="admin-btn danger" id="adminResetBtn2"><i class="fas fa-undo"></i> Reset Data</button>
+                    </div>
+                </div>
+                <div class="admin-card">
+                    <h3><i class="fas fa-power-off"></i> Session</h3>
+                    <button class="admin-btn danger" id="adminLogoutBtn"><i class="fas fa-sign-out-alt"></i> Logout Admin</button>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+<!-- ===== CONFIRM DIALOG ===== -->
+<div id="confirmDialog">
+    <div class="confirm-box">
+        <h4 id="confirmTitle">Are you sure?</h4>
+        <p id="confirmMsg">This action cannot be undone.</p>
+        <div class="actions">
+            <button class="admin-btn ghost" id="confirmCancel">Cancel</button>
+            <button class="admin-btn danger" id="confirmOk">Confirm</button>
+        </div>
+    </div>
+</div>
+
  <div id="studentMapModal" class="student-map-modal" aria-hidden="true">
  <div class="student-map-modal-content" role="dialog" aria-modal="true" aria-label="Student's District Map">
  <div class="student-map-modal-header">
@@ -1840,7 +2431,7 @@
  </div>
 
  <div id="toast" class="toast"><i class="fa-solid fa-check-circle"></i><span id="toast-text"></span></div>
-        <script>
+        <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
             document.addEventListener("contextmenu", function (e) {
                 e.preventDefault();
                 return false;
@@ -1869,19 +2460,53 @@
                     return false;
                 }
             }
-            const validUsers = [{ username: "cse17", password: "cHJpbWUxNw==", displayName: "CSE 17 Batch" }];
+            // Valid users (password stored as base64). Admin is hardcoded as requested.
+            const validUsers = [
+                { username: "cse17", password: "cHJpbWUxNw==", displayName: "CSE 17 Batch", role: "user" },
+                // admin / Riad12@345 (base64 encoded as obfuscation)
+                { username: "admin", password: "UmlhZDEyQDM0NQ==", displayName: "Administrator", role: "admin" },
+            ];
             function decodePassword(encoded) {
-                return atob(encoded);
+                try { return atob(encoded); } catch (e) { return ""; }
             }
             const loginModal = document.getElementById("loginModal");
             const mainContent = document.getElementById("mainContent");
             const loginForm = document.getElementById("loginForm");
             const loginError = document.getElementById("loginError");
             const logoutBtn = document.getElementById("logoutBtn");
+            const adminBtn = document.getElementById("adminBtn");
+
+            function logActivity(action, user) {
+                try {
+                    const log = JSON.parse(localStorage.getItem("cseActivityLog") || "[]");
+                    log.unshift({
+                        time: new Date().toISOString(),
+                        user: user || localStorage.getItem("cseUsername") || "guest",
+                        action: action,
+                    });
+                    // keep last 100 entries
+                    localStorage.setItem("cseActivityLog", JSON.stringify(log.slice(0, 100)));
+                } catch (e) { /* ignore */ }
+            }
+
+            function getCurrentRole() {
+                return localStorage.getItem("cseRole") || "user";
+            }
+            function isAdmin() { return getCurrentRole() === "admin"; }
+
+            function applyRoleUI() {
+                if (isAdmin()) {
+                    adminBtn.classList.add("visible");
+                } else {
+                    adminBtn.classList.remove("visible");
+                }
+            }
+
             function checkLoginStatus() {
                 const isLoggedIn = localStorage.getItem("cseLoggedIn");
                 const username = localStorage.getItem("cseUsername");
-                if (isLoggedIn === "true" && username === "cse17") {
+                const validNames = validUsers.map((u) => u.username);
+                if (isLoggedIn === "true" && validNames.includes(username)) {
                     startApp();
                 } else {
                     showLoginModal();
@@ -1890,26 +2515,54 @@
             function showLoginModal() {
                 loginModal.style.display = "flex";
                 mainContent.style.display = "none";
+                adminBtn.classList.remove("visible");
             }
             loginForm.addEventListener("submit", function (e) {
                 e.preventDefault();
-                const username = document.getElementById("username").value.trim();
-                const password = document.getElementById("password").value.trim();
-                const user = validUsers.find((u) => u.username === username && decodePassword(u.password) === password);
-                if (user) {
-                    localStorage.setItem("cseLoggedIn", "true");
-                    localStorage.setItem("cseUsername", username);
-                    startApp();
-                } else {
+                try {
+                    const username = (document.getElementById("username").value || "").trim();
+                    const password = (document.getElementById("password").value || "").trim();
+                    console.log("[login] attempt:", username);
+                    if (!username || !password) {
+                        loginError.textContent = "Please enter username and password.";
+                        loginError.style.display = "block";
+                        setTimeout(() => { loginError.style.display = "none"; }, 3000);
+                        return;
+                    }
+                    const user = validUsers.find(
+                        (u) => u.username === username && decodePassword(u.password) === password
+                    );
+                    if (user) {
+                        try {
+                            localStorage.setItem("cseLoggedIn", "true");
+                            localStorage.setItem("cseUsername", username);
+                            localStorage.setItem("cseRole", user.role || "user");
+                            localStorage.setItem("cseLoginAt", new Date().toISOString());
+                            const logins = parseInt(localStorage.getItem("cseLoginCount") || "0", 10) + 1;
+                            localStorage.setItem("cseLoginCount", String(logins));
+                        } catch (storageErr) {
+                            console.warn("localStorage write failed (continuing anyway):", storageErr);
+                        }
+                        try { logActivity("logged in", username); } catch (e2) {}
+                        console.log("[login] success ->", user.role);
+                        startApp();
+                    } else {
+                        loginError.textContent = "Invalid credentials. Please try again!";
+                        loginError.style.display = "block";
+                        setTimeout(() => { loginError.style.display = "none"; }, 3000);
+                    }
+                } catch (err) {
+                    console.error("[login] submit handler crashed:", err);
+                    loginError.textContent = "Login error: " + (err && err.message ? err.message : err);
                     loginError.style.display = "block";
-                    setTimeout(() => {
-                        loginError.style.display = "none";
-                    }, 3000);
                 }
             });
             logoutBtn.addEventListener("click", function () {
+                logActivity("logged out");
                 localStorage.removeItem("cseLoggedIn");
                 localStorage.removeItem("cseUsername");
+                localStorage.removeItem("cseRole");
+                localStorage.removeItem("cseLoginAt");
                 document.getElementById("username").value = "";
                 document.getElementById("password").value = "";
                 showLoginModal();
@@ -2685,7 +3338,8 @@
                 if (!codes || codes.length === 0) return "";
                 return String.fromCharCode.apply(null, codes);
             }
-            const students = encodedStudents.map((s) => ({
+            // Default student list (decoded from the encoded array above).
+            const defaultStudents = encodedStudents.map((s) => ({
                 id: 0,
                 name: dc(s.n),
                 studentId: dc(s.s),
@@ -2697,7 +3351,28 @@
                 bloodGroup: dc(s.bg),
                 photo: dc(s.pic),
             }));
-            students.forEach((s, i) => (s.id = i + 1));
+            defaultStudents.forEach((s, i) => (s.id = i + 1));
+
+            // Live, mutable student list (admin can add/edit/delete; persisted in localStorage).
+            let students = (function loadStudents() {
+                try {
+                    const raw = localStorage.getItem("cseStudents");
+                    if (raw) {
+                        const parsed = JSON.parse(raw);
+                        if (Array.isArray(parsed) && parsed.length) return parsed;
+                    }
+                } catch (e) { /* ignore */ }
+                return JSON.parse(JSON.stringify(defaultStudents));
+            })();
+            // Make sure ids exist
+            students.forEach((s, i) => { if (!s.id) s.id = i + 1; });
+
+            function saveStudents() {
+                try { localStorage.setItem("cseStudents", JSON.stringify(students)); } catch (e) {}
+            }
+            function nextStudentId() {
+                return students.reduce((m, s) => Math.max(m, s.id || 0), 0) + 1;
+            }
             function getInitials(name) {
                 return name
                     .split(" ")
@@ -2801,30 +3476,61 @@
             });
             window.onload = () => {
                 setTimeout(() => {
-                    document.getElementById("cinematicLoader").style.opacity = "0";
+                    const loader = document.getElementById("cinematicLoader");
+                    if (loader) loader.style.opacity = "0";
                     setTimeout(() => {
-                        document.getElementById("cinematicLoader").style.display = "none";
-                        checkLoginStatus();
+                        if (loader) loader.style.display = "none";
+                        try { checkLoginStatus(); }
+                        catch (err) {
+                            console.error("checkLoginStatus failed:", err);
+                            try { showLoginModal(); } catch (e) {
+                                // last-ditch: force-show the login modal directly
+                                const m = document.getElementById("loginModal");
+                                if (m) m.style.display = "flex";
+                            }
+                        }
                     }, 800);
                 }, 2000);
-                document.getElementById("year").textContent = new Date().getFullYear();
+                const yEl = document.getElementById("year");
+                if (yEl) yEl.textContent = new Date().getFullYear();
             };
+            // Surface any uncaught errors to the console for easier debugging.
+            window.addEventListener("error", (e) => {
+                console.error("Uncaught error:", e.message, "at", e.filename + ":" + e.lineno);
+            });
             function startApp() {
-                loginModal.style.display = "none";
-                mainContent.style.display = "block";
-                setTimeout(() => {
-                    mainContent.style.opacity = "1";
-                }, 50);
-                if (window.innerWidth > 768) {
-                    const splineContainer = document.getElementById("splineContainer");
-                    splineContainer.innerHTML =
-                        "<iframe src='https://my.spline.design/orb-tM8ZiWUbUPZAhawRCTmEYzQs/' frameborder='0'></iframe>";
+                try {
+                    loginModal.style.display = "none";
+                    mainContent.style.display = "block";
+                    setTimeout(() => { mainContent.style.opacity = "1"; }, 50);
+                    try { applyRoleUI(); } catch (e) { console.warn("applyRoleUI failed", e); }
+                    try { applyAnnouncement(); } catch (e) { console.warn("applyAnnouncement failed", e); }
+                    if (window.innerWidth > 768) {
+                        try {
+                            const splineContainer = document.getElementById("splineContainer");
+                            if (splineContainer) splineContainer.innerHTML =
+                                "<iframe src='https://my.spline.design/orb-tM8ZiWUbUPZAhawRCTmEYzQs/' frameborder='0'></iframe>";
+                        } catch (e) { /* ignore */ }
+                    }
+                    try { renderStudents(); } catch (e) { console.error("renderStudents failed", e); }
+                    try { startClock(); } catch (e) { /* ignore */ }
+                    // GSAP is loaded from a CDN; in sandboxed previews it may not be available.
+                    if (typeof gsap !== "undefined" && gsap && gsap.from) {
+                        try {
+                            gsap.from(".hero-title-main", { y: 50, opacity: 0, duration: 1.2, ease: "power3.out" });
+                            gsap.from(".hero-stats-container", { y: 30, opacity: 0, duration: 1, delay: 0.5 });
+                        } catch (e) { /* ignore */ }
+                    }
+                    try { initializeScrollAnimations(); } catch (e) { /* ignore */ }
+                } catch (err) {
+                    console.error("startApp crashed:", err);
+                    // Still make sure the main content is visible.
+                    try {
+                        loginModal.style.display = "none";
+                        mainContent.style.display = "block";
+                        mainContent.style.opacity = "1";
+                    } catch (e) {}
                 }
-                renderStudents();
-                startClock();
-                gsap.from(".hero-title-main", { y: 50, opacity: 0, duration: 1.2, ease: "power3.out" });
-                gsap.from(".hero-stats-container", { y: 30, opacity: 0, duration: 1, delay: 0.5 });
-                initializeScrollAnimations();
             }
             function startClock() {
                 function updateClock() {
@@ -2884,6 +3590,373 @@
    }
  });
 
+/* ===========================================================
+   ADMIN DASHBOARD LOGIC
+   =========================================================== */
+(function adminDashboardModule() {
+    const overlay        = document.getElementById("adminOverlay");
+    const closeBtn       = document.getElementById("adminCloseBtn");
+    const tabs           = document.querySelectorAll(".admin-tab");
+    const sections       = document.querySelectorAll(".admin-section");
+    const adminBtn       = document.getElementById("adminBtn");
+    const studentsBody   = document.getElementById("adminStudentsBody");
+    const adminSearch    = document.getElementById("adminSearchInput");
+    const studentForm    = document.getElementById("adminStudentForm");
+    const formTitle      = document.getElementById("adminFormTitle");
+    const formResetBtn   = document.getElementById("adminFormReset");
+    const annForm        = document.getElementById("adminAnnForm");
+    const annClearBtn    = document.getElementById("annClearBtn");
+    const adminLog       = document.getElementById("adminLog");
+    const clearLogBtn    = document.getElementById("adminClearLog");
+    const exportBtn      = document.getElementById("adminExportBtn");
+    const exportBtn2     = document.getElementById("adminExportBtn2");
+    const resetBtn       = document.getElementById("adminResetBtn");
+    const resetBtn2      = document.getElementById("adminResetBtn2");
+    const adminLogoutBtn = document.getElementById("adminLogoutBtn");
+
+    // -------- Confirm dialog helper --------
+    const confirmDlg = document.getElementById("confirmDialog");
+    const confirmOk = document.getElementById("confirmOk");
+    const confirmCancel = document.getElementById("confirmCancel");
+    const confirmTitle = document.getElementById("confirmTitle");
+    const confirmMsg = document.getElementById("confirmMsg");
+    let _confirmResolver = null;
+    function askConfirm(title, msg) {
+        confirmTitle.textContent = title || "Are you sure?";
+        confirmMsg.textContent = msg || "This action cannot be undone.";
+        confirmDlg.classList.add("show");
+        return new Promise((res) => { _confirmResolver = res; });
+    }
+    confirmOk.addEventListener("click", () => { confirmDlg.classList.remove("show"); if (_confirmResolver) _confirmResolver(true); });
+    confirmCancel.addEventListener("click", () => { confirmDlg.classList.remove("show"); if (_confirmResolver) _confirmResolver(false); });
+    confirmDlg.addEventListener("click", (e) => { if (e.target === confirmDlg) { confirmDlg.classList.remove("show"); if (_confirmResolver) _confirmResolver(false); } });
+
+    // -------- Open / close --------
+    function openAdmin() {
+        if (!isAdmin()) {
+            showToast("Admin access only.");
+            return;
+        }
+        overlay.classList.add("show");
+        overlay.setAttribute("aria-hidden", "false");
+        document.body.style.overflow = "hidden";
+        switchTab("dash");
+        refreshAll();
+        logActivity("opened admin dashboard");
+    }
+    function closeAdmin() {
+        overlay.classList.remove("show");
+        overlay.setAttribute("aria-hidden", "true");
+        document.body.style.overflow = "";
+    }
+    adminBtn.addEventListener("click", openAdmin);
+    closeBtn.addEventListener("click", closeAdmin);
+    overlay.addEventListener("click", (e) => { if (e.target === overlay) closeAdmin(); });
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && overlay.classList.contains("show")) closeAdmin();
+    });
+
+    // -------- Tabs --------
+    function switchTab(name) {
+        tabs.forEach((t) => t.classList.toggle("active", t.dataset.tab === name));
+        sections.forEach((s) => s.classList.toggle("active", s.id === "adminSection-" + name));
+        if (name === "students") renderAdminStudentsTable();
+        if (name === "dash") refreshDashboard();
+        if (name === "ann") loadAnnouncementForm();
+        if (name === "activity") renderActivityLog();
+        if (name === "add" && !studentForm.dataset.editing) clearStudentForm();
+    }
+    tabs.forEach((t) => t.addEventListener("click", () => switchTab(t.dataset.tab)));
+    document.querySelectorAll("[data-jump]").forEach((b) => {
+        b.addEventListener("click", () => switchTab(b.dataset.jump));
+    });
+
+    // -------- Dashboard stats --------
+    function refreshDashboard() {
+        document.getElementById("adminStatTotal").textContent  = students.length;
+        document.getElementById("adminStatEmail").textContent  = students.filter(s => s.email).length;
+        document.getElementById("adminStatPhone").textContent  = students.filter(s => s.phone).length;
+        document.getElementById("adminStatPhoto").textContent  = students.filter(s => s.photo).length;
+        document.getElementById("adminStatLogins").textContent = localStorage.getItem("cseLoginCount") || "0";
+        const sessAt = localStorage.getItem("cseLoginAt");
+        document.getElementById("adminStatSession").textContent = sessAt
+            ? new Date(sessAt).toLocaleString()
+            : "—";
+
+        // Blood group breakdown
+        const groups = {};
+        students.forEach((s) => {
+            const g = (s.bloodGroup || "Unknown").trim() || "Unknown";
+            groups[g] = (groups[g] || 0) + 1;
+        });
+        const list = document.getElementById("adminBloodList");
+        list.innerHTML = "";
+        Object.keys(groups).sort().forEach((g) => {
+            const chip = document.createElement("div");
+            chip.className = "admin-blood-chip";
+            chip.innerHTML = `<b>${groups[g]}</b>${escapeHtml(g)}`;
+            list.appendChild(chip);
+        });
+        if (!list.children.length) list.innerHTML = '<div class="admin-empty">No data</div>';
+    }
+
+    // -------- Students table --------
+    function getInitialsLocal(name) {
+        return (name || "?").split(" ").map(w => w[0] || "").join("").toUpperCase().slice(0, 2);
+    }
+    function escapeHtml(s) {
+        return String(s == null ? "" : s)
+            .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+    }
+    function renderAdminStudentsTable(filter) {
+        const q = (filter || adminSearch.value || "").trim().toLowerCase();
+        studentsBody.innerHTML = "";
+        const list = students.filter((s) =>
+            !q ||
+            (s.name || "").toLowerCase().includes(q) ||
+            (s.studentId || "").toLowerCase().includes(q)
+        );
+        if (!list.length) {
+            studentsBody.innerHTML = `<tr><td colspan="6"><div class="admin-empty"><i class="fas fa-search"></i>No students found</div></td></tr>`;
+            return;
+        }
+        list.forEach((s, idx) => {
+            const tr = document.createElement("tr");
+            const photo = s.photo
+                ? `<img src="${escapeHtml(s.photo)}" class="mini-photo" alt="" onerror="this.outerHTML='<span class=\\'mini-photo\\'>${getInitialsLocal(s.name)}</span>'">`
+                : `<span class="mini-photo">${getInitialsLocal(s.name)}</span>`;
+            tr.innerHTML = `
+                <td>${idx + 1}</td>
+                <td style="display:flex; align-items:center; gap:10px;">${photo}<span>${escapeHtml(s.name)}</span></td>
+                <td>${escapeHtml(s.studentId)}</td>
+                <td>${escapeHtml(s.phone || "—")}</td>
+                <td>${escapeHtml(s.bloodGroup || "—")}</td>
+                <td>
+                    <div class="row-actions">
+                        <button class="icon-btn edit" title="Edit" data-edit="${s.id}"><i class="fas fa-pen"></i></button>
+                        <button class="icon-btn del" title="Delete" data-del="${s.id}"><i class="fas fa-trash"></i></button>
+                    </div>
+                </td>`;
+            studentsBody.appendChild(tr);
+        });
+        // wire row actions
+        studentsBody.querySelectorAll("[data-edit]").forEach((b) =>
+            b.addEventListener("click", () => editStudent(parseInt(b.dataset.edit, 10)))
+        );
+        studentsBody.querySelectorAll("[data-del]").forEach((b) =>
+            b.addEventListener("click", () => deleteStudent(parseInt(b.dataset.del, 10)))
+        );
+    }
+    adminSearch.addEventListener("input", () => renderAdminStudentsTable());
+
+    // -------- Add / Edit student --------
+    function clearStudentForm() {
+        studentForm.reset();
+        document.getElementById("sfId").value = "";
+        delete studentForm.dataset.editing;
+        formTitle.textContent = "Add New Student";
+    }
+    function editStudent(id) {
+        const s = students.find((x) => x.id === id);
+        if (!s) return;
+        document.getElementById("sfId").value         = s.id;
+        document.getElementById("sfName").value       = s.name || "";
+        document.getElementById("sfStudentId").value  = s.studentId || "";
+        document.getElementById("sfPhone").value      = s.phone || "";
+        document.getElementById("sfBlood").value      = s.bloodGroup || "";
+        document.getElementById("sfCurrent").value    = s.currentAddress || "";
+        document.getElementById("sfPermanent").value  = s.permanentAddress || "";
+        document.getElementById("sfEmail").value      = s.email || "";
+        document.getElementById("sfFacebook").value   = s.facebook || "";
+        document.getElementById("sfPhoto").value      = s.photo || "";
+        studentForm.dataset.editing = "1";
+        formTitle.textContent = "Edit Student";
+        switchTab("add");
+    }
+    async function deleteStudent(id) {
+        const s = students.find((x) => x.id === id);
+        if (!s) return;
+        const ok = await askConfirm("Delete student?", `"${s.name}" will be removed from the directory.`);
+        if (!ok) return;
+        students = students.filter((x) => x.id !== id);
+        saveStudents();
+        renderStudents(document.getElementById("search").value || "");
+        renderAdminStudentsTable();
+        refreshDashboard();
+        logActivity(`deleted student "${s.name}"`);
+        showToast("Student deleted.");
+    }
+    formResetBtn.addEventListener("click", clearStudentForm);
+    studentForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const idField = document.getElementById("sfId").value;
+        const data = {
+            name: document.getElementById("sfName").value.trim(),
+            studentId: document.getElementById("sfStudentId").value.trim(),
+            phone: document.getElementById("sfPhone").value.trim(),
+            bloodGroup: document.getElementById("sfBlood").value.trim(),
+            currentAddress: document.getElementById("sfCurrent").value.trim(),
+            permanentAddress: document.getElementById("sfPermanent").value.trim(),
+            email: document.getElementById("sfEmail").value.trim(),
+            facebook: document.getElementById("sfFacebook").value.trim(),
+            photo: document.getElementById("sfPhoto").value.trim(),
+        };
+        if (!data.name || !data.studentId) {
+            showToast("Name and Student ID are required.");
+            return;
+        }
+        if (idField) {
+            const id = parseInt(idField, 10);
+            const idx = students.findIndex((x) => x.id === id);
+            if (idx >= 0) {
+                students[idx] = Object.assign({}, students[idx], data);
+                logActivity(`updated student "${data.name}"`);
+                showToast("Student updated.");
+            }
+        } else {
+            // prevent duplicate student IDs
+            if (students.some((x) => x.studentId === data.studentId)) {
+                showToast("A student with that ID already exists.");
+                return;
+            }
+            const newStudent = Object.assign({ id: nextStudentId() }, data);
+            students.push(newStudent);
+            logActivity(`added student "${data.name}"`);
+            showToast("Student added.");
+        }
+        saveStudents();
+        clearStudentForm();
+        renderStudents(document.getElementById("search").value || "");
+        renderAdminStudentsTable();
+        refreshDashboard();
+        switchTab("students");
+    });
+
+    // -------- Announcement management --------
+    function loadAnnouncementForm() {
+        let ann = {};
+        try { ann = JSON.parse(localStorage.getItem("cseAnnouncement") || "{}"); } catch (e) {}
+        document.getElementById("annTitle").value = ann.title || "";
+        document.getElementById("annBody").value  = ann.body  || "";
+        document.getElementById("annImage").value = ann.image || "";
+    }
+    annForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const ann = {
+            title: document.getElementById("annTitle").value.trim(),
+            body:  document.getElementById("annBody").value.trim(),
+            image: document.getElementById("annImage").value.trim(),
+            updatedAt: new Date().toISOString(),
+        };
+        localStorage.setItem("cseAnnouncement", JSON.stringify(ann));
+        applyAnnouncement();
+        logActivity("updated announcement");
+        showToast("Announcement saved.");
+    });
+    annClearBtn.addEventListener("click", async () => {
+        const ok = await askConfirm("Clear announcement?", "The announcement will be removed for all users.");
+        if (!ok) return;
+        localStorage.removeItem("cseAnnouncement");
+        loadAnnouncementForm();
+        applyAnnouncement();
+        logActivity("cleared announcement");
+        showToast("Announcement cleared.");
+    });
+
+    // -------- Activity log --------
+    function renderActivityLog() {
+        let log = [];
+        try { log = JSON.parse(localStorage.getItem("cseActivityLog") || "[]"); } catch (e) {}
+        if (!log.length) {
+            adminLog.innerHTML = '<div class="admin-empty"><i class="fas fa-inbox"></i>No activity yet</div>';
+            return;
+        }
+        adminLog.innerHTML = log.map((e) => {
+            const d = new Date(e.time);
+            const t = d.toLocaleString();
+            return `<div class="entry"><span class="t">${escapeHtml(t)}</span><span class="u">${escapeHtml(e.user)}</span> <span class="a">${escapeHtml(e.action)}</span></div>`;
+        }).join("");
+    }
+    clearLogBtn.addEventListener("click", async () => {
+        const ok = await askConfirm("Clear activity log?", "All activity entries will be removed.");
+        if (!ok) return;
+        localStorage.removeItem("cseActivityLog");
+        renderActivityLog();
+        showToast("Activity log cleared.");
+    });
+
+    // -------- Export / Reset --------
+    function doExport() {
+        const blob = new Blob([JSON.stringify(students, null, 2)], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `cse17-students-${new Date().toISOString().slice(0, 10)}.json`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+        logActivity("exported students JSON");
+    }
+    async function doReset() {
+        const ok = await askConfirm("Reset student data?", "All admin changes will be discarded and defaults restored.");
+        if (!ok) return;
+        localStorage.removeItem("cseStudents");
+        students = JSON.parse(JSON.stringify(defaultStudents));
+        saveStudents();
+        renderStudents(document.getElementById("search").value || "");
+        renderAdminStudentsTable();
+        refreshDashboard();
+        logActivity("reset student data to defaults");
+        showToast("Data reset to defaults.");
+    }
+    exportBtn.addEventListener("click", doExport);
+    exportBtn2.addEventListener("click", doExport);
+    resetBtn.addEventListener("click", doReset);
+    resetBtn2.addEventListener("click", doReset);
+
+    // -------- Admin-side logout --------
+    adminLogoutBtn.addEventListener("click", () => {
+        closeAdmin();
+        logoutBtn.click();
+    });
+
+    // -------- Refresh everything --------
+    function refreshAll() {
+        refreshDashboard();
+        renderAdminStudentsTable();
+        loadAnnouncementForm();
+        renderActivityLog();
+    }
+    // Expose a tiny api for other parts
+    window.__admin = { refresh: refreshAll, open: openAdmin, close: closeAdmin };
+})();
+
+/* ===========================================================
+   ANNOUNCEMENT RENDER (read from localStorage on app start)
+   =========================================================== */
+function applyAnnouncement() {
+    let ann = {};
+    try { ann = JSON.parse(localStorage.getItem("cseAnnouncement") || "{}"); } catch (e) {}
+    const modal = document.getElementById("announcementModal");
+    if (!modal) return;
+    const content = modal.querySelector(".announcement-content");
+    const titleEl = modal.querySelector(".modal-title");
+    if (!ann || (!ann.title && !ann.body && !ann.image)) return; // keep original content
+    if (titleEl && ann.title) titleEl.innerHTML = '<i class="fas fa-bullhorn"></i> ' + escapeAnnHtml(ann.title);
+    if (content) {
+        content.innerHTML =
+            (ann.image ? `<img src="${escapeAnnHtml(ann.image)}" alt="announcement" class="announcement-img" onerror="this.style.display='none'">` : "") +
+            (ann.body  ? `<p style="white-space:pre-wrap; line-height:1.7;">${escapeAnnHtml(ann.body)}</p>` : "");
+    }
+}
+function escapeAnnHtml(s) {
+    return String(s == null ? "" : s)
+        .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+}
+
  </script>
-    </body>
+    <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a04e4e988e8416d4',t:'MTc4MDMxNzgzOA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
